@@ -1,0 +1,28 @@
+{
+  "name": "to-do-list",
+  "version": "1.0.0",
+  "description": "A to-do-list web application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeeMMT/to-do-list.git"
+  },
+  "author": "Marcus Turner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LeeMMT/to-do-list/issues"
+  },
+  "homepage": "https://github.com/LeeMMT/to-do-list#readme",
+  "devDependencies": {
+    "css-loader": "^5.2.6",
+    "style-loader": "^3.1.0",
+    "webpack": "^5.44.0",
+    "webpack-cli": "^4.7.2"
+  },
+  "dependencies": {
+    "date-fns": "^2.22.1"
+  }
+}
