@@ -7,7 +7,48 @@
     <script src="https://kit.fontawesome.com/91d1dac478.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <p class="test">Test</p>
+    <header>
+        <nav>
+            <div id="nav-left">
+                <ul>
+                    <li><a href="#"><div class="icon-bg-first"><i class="menu-icon"></i></div></a></li>
+                    <li><a href="#"><div class="icon-bg"><i class="home-icon"></i></div></a></li>
+                </ul>
+            </div>
+            <div id="nav-right">
+                <ul>
+                    <li><a href="#"><div class="icon-bg"><i class="add-icon"></i></div></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="flex-horizontal">
+        <div id="sidebar">
+            <div id="project-list">
+                <div class="flex-horizontal">
+                    <i class="arrow-down-icon"></i><p class="sidebar-title">Projects</p>
+                </div>
+                <div class="flex-horizontal">
+                    <i class="bullet-icon"></i><p>Tasks</p>
+                </div>
+            </div>
+        </div>
+        <form class="quickAddGrid">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description"></textarea>
+            <label for="project">Project:</label>
+            <select id="project" name="project">
+                <option value="tasks">Tasks</option>
+            </select>
+            <div class="flex-horizontal">
+                <button class="cancel-btn">Cancel</button>
+                <button class="add-btn">Add</button>
+            </div>
+        </form>
+    </div>
+    
     <script type="text/javascript" src="main.js"></script>
 </body>
 </html>

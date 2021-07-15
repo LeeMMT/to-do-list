@@ -1,9 +1,10 @@
 import './cssreset.css';
 import './style.css';
+const quickAddBtn = document.querySelector(".add-icon");
 
 const DATACONTROL = (function() {
-    let projects =  [
-        {title: "default",
+    const projects =  [
+        {title: "Tasks",
         entries: []}
     ];
 
@@ -21,5 +22,3 @@ const DATACONTROL = (function() {
     }
     return {createNewProject, createNewToDo};
 })();
-
-console.log("test");
