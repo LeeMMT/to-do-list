@@ -16,51 +16,23 @@ input, textarea, select, option {
   background-color: #F3F6F7;
   border: 1px solid #B8B8B8;
   border-radius: 4px;
+  height: max-content;
 }
 
 label {
   color: #333333;
   font-size: 16px;
   text-align: right;
-  margin-top: 4px;
+  margin-top: 5px;
+  height: max-content;
 }
 
 select {
   width: max-content;
 }
 
-.add-btn {
-  width: 60px;
-  border-radius: 6px;
-  padding: 4px;
-  background-color: #C3423F;
-  color: #fff;
-  border: none;
-  font-size: 14px;
-  margin-left: 4px;
-}
-
-.cancel-btn {
-  width: 60px;
-  border-radius: 6px;
-  padding: 4px;
-  color: #333333;
-  background-color: transparent;
-  border: none;
-  font-size: 14px;
-}
-
-.cancel-btn:hover {
-  text-decoration: underline;
-}
-
-button:hover {
-  cursor: pointer;
-}
-
-.quickAddGrid .flex-horizontal {
-  grid-area: add;
-  margin-left: auto;
+button {
+  height: max-content;
 }
 
 /*Repeated use*/
@@ -134,17 +106,73 @@ nav a {
   display: grid;
   grid-template-columns: 100px 1fr;
   grid-gap: 12px;
-  grid-template-areas: "none none"
-                       "none none"
-                       "none none"
+  grid-template-areas: "title-l title"
+                       "description-l description"
+                       "project-l project"
                        ".    add";
   width: 600px;
   height: max-content;
   margin: 36px auto 0 auto;
 }
 
-.submit-btn {
-  grid-area: submit;
+#title-l {
+  grid-area: title-l;
+}
+
+#title {
+  grid-area: title;
+}
+
+#description-l {
+  grid-area: description-l
+}
+
+#description {
+  grid-area: description;
+}
+
+#project-l {
+  grid-area: project-l;
+}
+
+.add-btn {
+  width: 60px;
+  border-radius: 6px;
+  padding: 4px;
+  background-color: #C3423F;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  margin-left: 4px;
+}
+
+.cancel-btn {
+  width: 60px;
+  border-radius: 6px;
+  padding: 4px;
+  color: #333333;
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+}
+
+.cancel-btn:hover {
+  text-decoration: underline;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.quickAddGrid .flex-horizontal {
+  grid-area: add;
+  margin-left: auto;
+}
+
+.project-row {
+  display: flex;
+  justify-content: space-between;
+  grid-area: project;
 }
 
 /*Fonts*/

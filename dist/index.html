@@ -34,14 +34,20 @@
             </div>
         </div>
         <form class="quickAddGrid">
-            <label for="title">Title</label>
+            <label for="title" id="title-l">Title</label>
             <input type="text" id="title" name="title">
-            <label for="description">Description:</label>
+            <label for="description" id="description-l">Description:</label>
             <textarea id="description" name="description"></textarea>
-            <label for="project">Project:</label>
-            <select id="project" name="project">
-                <option value="tasks">Tasks</option>
-            </select>
+            <label for="project" id="project-l">Project:</label>
+            <div class="project-row">
+                <select id="project" name="project">
+                    <option value="" selected disabled hidden>Existing project</option>
+                    <option value="tasks">Tasks</option>
+                </select>
+                <label for="new-project" style="display: none">Create new project</label>
+                    <input type="text" id="new-project" name="new-project" placeholder="Or create new project..."></input>
+                
+            </div>
             <div class="flex-horizontal">
                 <button class="cancel-btn">Cancel</button>
                 <button class="add-btn">Add</button>
