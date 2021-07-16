@@ -112,7 +112,7 @@ nav a {
                        ".    add";
   width: 600px;
   height: max-content;
-  margin: 36px auto 0 auto;
+  margin: 32px auto 0 auto;
 }
 
 #title-l {
@@ -250,6 +250,15 @@ button:hover {
   height: 14px;
   width: 14px;
   transform: rotate(45deg);
+}
+
+.close-icon {
+  display: block;
+  background-image: url('assets/icons/darkclose.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 16px;
+  width: 16px;
 }
 
 .arrow-down-icon {
