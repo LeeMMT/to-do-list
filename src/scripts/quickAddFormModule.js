@@ -5,7 +5,7 @@ const QuickAddForm = (function() {
         document.querySelector(".quickAddGrid").remove();
     }
 
-    const openForm = function(callback) {
+    const openForm = function(optionCallback, quickAddCallback) {
         if (document.querySelector(".quickAddGrid")) return;
 
         const form = document.createElement("form");
@@ -72,6 +72,7 @@ const QuickAddForm = (function() {
         const addBtn = document.createElement("button");
         addBtn.classList.add("add-btn");
         addBtn.textContent = "Add";
+        addBtn.setAttribute("type", "button");
 
         form.appendChild(titleLabel);
         form.appendChild(titleInput);
@@ -80,7 +81,7 @@ const QuickAddForm = (function() {
         form.appendChild(projectLabel);
 
         select.appendChild(opt1);
-        const optionArray = callback();
+        const optionArray = optionCallback();
         optionArray.forEach(item => select.appendChild(item));
 
         projectRow.appendChild(select);
@@ -95,8 +96,10 @@ const QuickAddForm = (function() {
         form.appendChild(flexHorizontal);
 
         document.querySelector("#main-body").appendChild(form);
+
+        addBtn.addEventListener("click", quickAddCallback);
     }
-    return {quickAddBtn, openForm};
+    return {quickAddBtn, openForm, closeForm};
 })();
 
 export {QuickAddForm};
