@@ -1,37 +1,20 @@
-import './cssreset.css';
-import './style.css';
-
-const DATACONTROL = (function() {
-    const projects =  [
-        {title: "Tasks",
-        entries: []}
-    ];
-
-    const createNewProject = function(title) {
-        let entries = [];
-        projects.push({title, entries});
-    }
-
-    const createNewToDo = function(title, description, dueDate, priority, projectName) {
-        for (let i = 0; i < projects.length; i++) {
-            if (projects[i].title === projectName) {
-                projects[i].entries.push({title, description, dueDate, priority});
-            }
-        }
-    }
-    return {createNewProject, createNewToDo};
-})();
-
 const QuickAddForm = (function() {
-    const quickAddBtn = document.querySelector(".add-icon");
-    const createForm = function() {
+    const quickAddBtn = document.querySelector(".add-icon").parentElement;
+
+    const closeForm = function() {
+        document.querySelector(".quickAddGrid").remove();
+    }
+
+    const openForm = function(callback) {
+        if (document.querySelector(".quickAddGrid")) return;
+
         const form = document.createElement("form");
         form.classList.add("quickAddGrid");
 
         const titleLabel = document.createElement("label");
         titleLabel.setAttribute("for", "title");
         titleLabel.setAttribute("id", "title-l");
-        titleLabel.textContent = "Title";
+        titleLabel.textContent = "Title:";
 
         const titleInput = document.createElement("input");
         titleInput.setAttribute("type", "text");
@@ -41,7 +24,7 @@ const QuickAddForm = (function() {
         const descriptionLabel = document.createElement("label");
         descriptionLabel.setAttribute("for", "description");
         descriptionLabel.setAttribute("id", "description-l");
-        descriptionLabel.textContent = "Description";
+        descriptionLabel.textContent = "Description:";
 
         const descriptionInput = document.createElement("textarea");
         descriptionInput.setAttribute("id", "description");
@@ -50,6 +33,7 @@ const QuickAddForm = (function() {
         const projectLabel = document.createElement("label");
         projectLabel.setAttribute("for", "project");
         projectLabel.setAttribute("id", "project-l");
+        projectLabel.textContent = "Project:";
 
         const projectRow = document.createElement("div");
         projectRow.classList.add("project-row");
@@ -83,6 +67,8 @@ const QuickAddForm = (function() {
         cancelBtn.classList.add("cancel-btn");
         cancelBtn.textContent = "Cancel";
 
+        cancelBtn.addEventListener("click", closeForm);
+
         const addBtn = document.createElement("button");
         addBtn.classList.add("add-btn");
         addBtn.textContent = "Add";
@@ -94,6 +80,9 @@ const QuickAddForm = (function() {
         form.appendChild(projectLabel);
 
         select.appendChild(opt1);
+        const optionArray = callback();
+        optionArray.forEach(item => select.appendChild(item));
+
         projectRow.appendChild(select);
         projectRow.appendChild(newProjectLabel);
         projectRow.appendChild(newProjectInput);
@@ -104,6 +93,10 @@ const QuickAddForm = (function() {
         flexHorizontal.appendChild(addBtn);
 
         form.appendChild(flexHorizontal);
+
+        document.querySelector("#main-body").appendChild(form);
     }
-    return {createForm};
+    return {quickAddBtn, openForm};
 })();
+
+export {QuickAddForm};

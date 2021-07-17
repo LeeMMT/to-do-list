@@ -179,19 +179,19 @@ button:hover {
 
 @font-face {
   font-family: 'open-reg';
-  src: url('assets/fonts/Open_Sans/OpenSans-Regular.ttf') format('woff2');
+  src: url('../assets/fonts/Open_Sans/OpenSans-Regular.ttf') format('woff2');
   font-style: normal;
 }
 
 @font-face {
   font-family: 'open-semi-b';
-  src: url('assets/fonts/Open_Sans/OpenSans-SemiBold.ttf') format('woff2');
+  src: url('../assets/fonts/Open_Sans/OpenSans-SemiBold.ttf') format('woff2');
   font-style: normal;
 }
 
 @font-face {
   font-family: 'open-b';
-  src: url('assets/fonts/Open_Sans/OpenSans-Bold.ttf') format('woff2');
+  src: url('../assets/fonts/Open_Sans/OpenSans-Bold.ttf') format('woff2');
   font-style: normal;
 }
 
@@ -226,7 +226,7 @@ button:hover {
 
 .menu-icon {
   display: block;
-  background-image: url('assets/icons/menu.svg');
+  background-image: url('../assets/icons/menu.svg');
   background-repeat: no-repeat;
   background-size: contain;
   height: 18px;
@@ -235,7 +235,7 @@ button:hover {
 
 .home-icon {
   display: block;
-  background-image: url('assets/icons/house.svg');
+  background-image: url('../assets/icons/house.svg');
   background-repeat: no-repeat;
   background-size: contain;
   height: 18px;
@@ -244,7 +244,7 @@ button:hover {
 
 .add-icon {
   display: block;
-  background-image: url('assets/icons/close.svg');
+  background-image: url('../assets/icons/close.svg');
   background-repeat: no-repeat;
   background-size: contain;
   height: 14px;
@@ -254,7 +254,7 @@ button:hover {
 
 .close-icon {
   display: block;
-  background-image: url('assets/icons/darkclose.svg');
+  background-image: url('../assets/icons/darkclose.svg');
   background-repeat: no-repeat;
   background-size: contain;
   height: 16px;
@@ -263,7 +263,7 @@ button:hover {
 
 .arrow-down-icon {
   display: block;
-  background-image: url('assets/icons/arrow-down.svg');
+  background-image: url('../assets/icons/arrow-down.svg');
   background-repeat: no-repeat;
   background-size: contain;
   height: 10px;
