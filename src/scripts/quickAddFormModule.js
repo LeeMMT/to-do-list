@@ -1,12 +1,102 @@
+const greyFlag = require('../assets/icons/flag-grey-icon.svg');
+const orangeFlag = require('../assets/icons/flag-orange-icon.svg');
+const redFlag = require('../assets/icons/flag-red-icon.svg');
+
 const QuickAddForm = (function() {
     const quickAddBtn = document.querySelector(".add-icon").parentElement;
+    let priorityLevel = "Low";
+
+    const setPriority = function(e) {
+        
+        const flagIcon = document.querySelector(".utility-icon-bg i");
+        flagIcon.className = "";
+        priorityLevel = this.textContent;
+
+        switch (priorityLevel) {
+            case "Low":
+                flagIcon.classList.add("flag-grey-icon");
+                break;
+            case "Medium":
+                flagIcon.classList.add("flag-orange-icon");
+                break;
+            case "High":
+                flagIcon.classList.add("flag-red-icon");
+                break;
+        }
+        
+        document.querySelector("#priority-div").remove();
+    }
+
+    function getPriority() {
+        return priorityLevel;
+    }
+
+    const openPriority = function() {
+        const priorityDiv = document.createElement("div");
+        priorityDiv.setAttribute("id", "priority-div");
+
+        const priority1 = document.createElement("div");
+        priority1.classList.add("flex-horizontal");
+
+        const p1Flag = document.createElement("i");
+        p1Flag.classList.add("flag-red-icon");
+
+        const p1Text = document.createElement("p");
+        p1Text.textContent = "High";
+
+        priority1.appendChild(p1Flag);
+        priority1.appendChild(p1Text);
+        priorityDiv.appendChild(priority1);
+
+        const priority2 = document.createElement("div");
+        priority2.classList.add("flex-horizontal");
+
+        const p2Flag = document.createElement("i");
+        p2Flag.classList.add("flag-orange-icon");
+
+        const p2Text = document.createElement("p");
+        p2Text.textContent = "Medium";
+
+        priority2.appendChild(p2Flag);
+        priority2.appendChild(p2Text);
+        priorityDiv.appendChild(priority2);
+
+        const priority3 = document.createElement("div");
+        priority3.classList.add("flex-horizontal");
+
+        const p3Flag = document.createElement("i");
+        p3Flag.classList.add("flag-grey-icon");
+
+        const p3Text = document.createElement("p");
+        p3Text.textContent = "Low";
+
+        priority3.appendChild(p3Flag);
+        priority3.appendChild(p3Text);
+        priorityDiv.appendChild(priority3);
+        document.querySelector("#utility-bar").appendChild(priorityDiv);
+
+        const priorityDivCollection = document.querySelectorAll("#priority-div .flex-horizontal");
+        priorityDivCollection.forEach(item => item.addEventListener("click", setPriority));
+    }
 
     const closeForm = function() {
+        document.querySelector("#utility-bar").remove();
         document.querySelector(".quickAddGrid").remove();
+        priorityLevel = "Low";
     }
 
     const openForm = function(optionCallback, quickAddCallback) {
         if (document.querySelector(".quickAddGrid")) return;
+
+        const utilityBar = document.createElement("div");
+        utilityBar.setAttribute("id", "utility-bar");
+        utilityBar.classList.add("flex-horizontal");
+
+        const priorityIconBg = document.createElement("div");
+        priorityIconBg.classList.add("utility-icon-bg");
+
+        const priorityIcon = document.createElement("i");
+        priorityIcon.classList.add("flag-grey-icon");
 
         const form = document.createElement("form");
         form.classList.add("quickAddGrid");
@@ -74,6 +164,9 @@ const QuickAddForm = (function() {
         addBtn.textContent = "Add";
         addBtn.setAttribute("type", "button");
 
+        priorityIconBg.appendChild(priorityIcon);
+        utilityBar.appendChild(priorityIconBg);
+        form.appendChild(utilityBar);
         form.appendChild(titleLabel);
         form.appendChild(titleInput);
         form.appendChild(descriptionLabel);
@@ -97,9 +190,19 @@ const QuickAddForm = (function() {
 
         document.querySelector("#main-body").appendChild(form);
 
+        priorityIconBg.addEventListener("click", openPriority);
+
+        const existingOrNew = function(e) {
+            console.log("yo");
+            (this.id === "project") ? newProjectInput.value = "" : select.selectedIndex = 0;
+        }
+
+        select.addEventListener("change", existingOrNew);
+        newProjectInput.addEventListener("input", existingOrNew);
         addBtn.addEventListener("click", quickAddCallback);
     }
-    return {quickAddBtn, openForm, closeForm};
+
+    return {quickAddBtn, openForm, closeForm, openPriority, priorityLevel, getPriority};
 })();
 
 export {QuickAddForm};

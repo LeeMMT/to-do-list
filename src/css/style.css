@@ -9,8 +9,14 @@ body {
     color: #202020;
 }
 
+.container {
+  max-width: 1140px;
+  margin: 0 auto 0 auto;
+}
+
 input, textarea, select, option {
   color: #202020;
+  font-family: open-reg, Arial, Helvetica, sans-serif;
   font-size: 16px;
   padding: 4px;
   background-color: #F3F6F7;
@@ -29,10 +35,12 @@ label {
 
 select {
   width: max-content;
+  height: 22px;
 }
 
 button {
   height: max-content;
+  font-family: open-reg, Arial, Helvetica, sans-serif;
 }
 
 /*Repeated use*/
@@ -106,13 +114,53 @@ nav a {
   display: grid;
   grid-template-columns: 100px 1fr;
   grid-gap: 12px;
-  grid-template-areas: "title-l title"
+  grid-template-areas: "priority priority"
+                       "title-l title"
                        "description-l description"
                        "project-l project"
                        ".    add";
   width: 600px;
   height: max-content;
   margin: 32px auto 0 auto;
+  transform: translateZ(0);
+}
+
+#utility-bar {
+  grid-area: priority;
+  margin-left: auto;
+}
+
+#priority-div {
+  position: fixed;
+  top: -16px;
+  right: -16px;
+  width: 200px;
+  border-radius: 4px;
+  background-color: #F3F6F7;
+  border: 1px solid #B8B8B8;
+}
+
+#priority-div .flex-horizontal {
+  padding: 4px;
+}
+
+#priority-div .flex-horizontal:hover {
+  background-color: #E4EBEC;
+  cursor: pointer;
+}
+
+#priority-div i {
+  margin-right: 8px;
+  margin-bottom: 12px;
+}
+
+#priority-div i:last-of-type {
+  margin-bottom: 0;
+}
+
+.priority-option {
+  height: 22px;
+  padding: 4px 0;
 }
 
 #title-l {
@@ -129,6 +177,7 @@ nav a {
 
 #description {
   grid-area: description;
+  height: 44px;
 }
 
 #project-l {
@@ -224,6 +273,11 @@ button:hover {
   background-color: #33444D;
 }
 
+.utility-icon-bg:hover {
+  background-color: #E4EBEC;
+  cursor: pointer;
+}
+
 .menu-icon {
   display: block;
   background-image: url('../assets/icons/menu.svg');
@@ -250,6 +304,43 @@ button:hover {
   height: 14px;
   width: 14px;
   transform: rotate(45deg);
+}
+
+.utility-icon-bg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  width: 28px;
+  border-radius: 6px;
+  margin-left: 12px;
+}
+
+.flag-grey-icon {
+  display: block;
+  background-image: url('../assets/icons/flag-grey-icon.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 16px;
+  width: 16px;
+}
+
+.flag-red-icon {
+  display: block;
+  background-image: url('../assets/icons/flag-red-icon.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 16px;
+  width: 16px;
+}
+
+.flag-orange-icon {
+  display: block;
+  background-image: url('../assets/icons/flag-orange-icon.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 16px;
+  width: 16px;
 }
 
 .close-icon {

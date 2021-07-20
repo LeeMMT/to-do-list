@@ -1,3 +1,4 @@
+import { fil } from 'date-fns/locale';
 import '../css/cssreset.css'
 import '../css/style.css';
 import { QuickAddForm } from './quickAddFormModule';
@@ -10,17 +11,12 @@ const DATACONTROL = (function() {
         entries: []}
     ];
 
-    const createNewProject = function(title) {
-        let entries = [];
-        projects.push({title, entries});
+    const createNewToDo = function(title, description, priority) {
+        return {title, description, priority};
     }
 
-    const createNewToDo = function(title, description, dueDate, priority, projectName) {
-        for (let i = 0; i < projects.length; i++) {
-            if (projects[i].title === projectName) {
-                projects[i].entries.push({title, description, dueDate, priority});
-            }
-        }
+    const createNewProject = function(projectName) {
+        return {projectName, entries: []};
     }
 
     const optionTagCreator = function() {
@@ -35,24 +31,36 @@ const DATACONTROL = (function() {
     };
 
     const quickAdd = function() {
+
         const title = document.querySelector("#title").value;
         const description = document.querySelector("#description").value;
         const project = document.querySelector("#project").value;
         const newProject = document.querySelector("#new-project").value;
 
-        if (project) {
-            for (let i = 0; i < projects.length; i++) {
-                if (projects[i].projectName === project) {
-                    projects[i].entries.push({title, description})
-                }
+        if (validateQuickAdd(title, description, project, newProject) === false) {
+            return;
+        }
+
+        if (!project) {
+            projects.push(createNewProject(newProject));
             }
-        } else {
-            projects.push({
-                projectName: newProject, entries: [title, description]
-            });
+
+        for (let i = 0; i < projects.length; i++) {
+            if (projects[i].projectName === project || newProject) {
+                projects[i].entries.push(createNewToDo(title, description, QuickAddForm.getPriority()));
+            }
         }
         QuickAddForm.closeForm();
-        console.log(projects);
+    }
+
+    const validateQuickAdd = function(title, description, project, newProject) {
+        if (!title || !description || (!project && !newProject)) {
+            alert("Please fill in the form");
+            return false;
+        } else {
+            console.log(projects);
+            return true;
+        }
     }
 
     return {createNewProject, createNewToDo, optionTagCreator, quickAdd};
