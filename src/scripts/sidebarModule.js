@@ -16,10 +16,9 @@ const sidebar = (function() {
 
             const p = document.createElement("p");
             p.textContent = obj.projectName;
-
             horizontalDiv.appendChild(p);
 
-            if (obj.entries > 0) {
+            if (obj.entries.length > 0) {
                 const num = document.createElement("p");
                 num.textContent = obj.entries.length;
                 horizontalDiv.appendChild(num);
