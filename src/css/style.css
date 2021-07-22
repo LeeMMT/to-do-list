@@ -12,6 +12,7 @@ body {
 .container {
   max-width: 1140px;
   margin: 0 auto 0 auto;
+  overflow: hidden;
 }
 
 input, textarea, select, option {
@@ -49,9 +50,26 @@ button {
   display: flex;
 }
 
-#sidebar .flex-horizontal {
+.sidebar .flex-horizontal {
   align-items: center;
-  margin-top: 8px;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-radius: 4px;
+  margin: 0;
+}
+
+.sidebar .flex-horizontal:first-of-type {
+  margin-bottom: 10px;
+}
+
+.sidebar .flex-horizontal:hover {
+  background-color: #E4EBEC;
+  cursor: pointer;
+}
+
+.sidebar .flex-horizontal:first-of-type:hover {
+  background-color: #F3F6F7;
+  cursor: initial;
 }
 
 /*Header & below*/
@@ -93,17 +111,27 @@ nav a {
   padding-right: 36px;
 }
 
-#sidebar {
+.sidebar {
+  display: initial !important;
   height: 500px;
-  width: 300px;
+  width: 200px;
   padding: 36px 0 0 36px;
+  margin-left: -200px;
   color: #333333;
-  display: none;
+  transition: all 0.4s;
+}
+
+.sidebar-open {
+  margin-left: 0px;
 }
 
 #project-list {
   display: flex;
   flex-direction: column;
+}
+
+#project-list p {
+  margin-left: 6px;
 }
 
 .sidebar-title {
@@ -301,8 +329,13 @@ button:hover {
   background-image: url('../assets/icons/close.svg');
   background-repeat: no-repeat;
   background-size: contain;
-  height: 14px;
-  width: 14px;
+  height: 18px;
+  width: 18px;
+  transform: rotate(0deg);
+  transition: all 0.4s;
+}
+
+.add-icon-rotated {
   transform: rotate(45deg);
 }
 

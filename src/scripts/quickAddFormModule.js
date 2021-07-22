@@ -1,7 +1,3 @@
-const greyFlag = require('../assets/icons/flag-grey-icon.svg');
-const orangeFlag = require('../assets/icons/flag-orange-icon.svg');
-const redFlag = require('../assets/icons/flag-red-icon.svg');
-
 const QuickAddForm = (function() {
     const quickAddBtn = document.querySelector(".add-icon").parentElement;
     let priorityLevel = "Low";
@@ -80,13 +76,25 @@ const QuickAddForm = (function() {
     }
 
     const closeForm = function() {
+        
+        setTimeout(() => {
+            quickAddBtn.children[0].classList.toggle("add-icon-rotated");
+        }, 0);
+
         document.querySelector("#utility-bar").remove();
         document.querySelector(".quickAddGrid").remove();
         priorityLevel = "Low";
     }
 
     const openForm = function(optionCallback, quickAddCallback) {
-        if (document.querySelector(".quickAddGrid")) return;
+        if (document.querySelector(".quickAddGrid")) {
+            closeForm();
+            return;
+        };
+
+        setTimeout(() => {
+            quickAddBtn.children[0].classList.toggle("add-icon-rotated");
+        }, 0);
 
         const utilityBar = document.createElement("div");
         utilityBar.setAttribute("id", "utility-bar");
@@ -193,7 +201,6 @@ const QuickAddForm = (function() {
         priorityIconBg.addEventListener("click", openPriority);
 
         const existingOrNew = function(e) {
-            console.log("yo");
             (this.id === "project") ? newProjectInput.value = "" : select.selectedIndex = 0;
         }
 

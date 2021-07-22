@@ -2,6 +2,7 @@ import { fil } from 'date-fns/locale';
 import '../css/cssreset.css'
 import '../css/style.css';
 import { QuickAddForm } from './quickAddFormModule';
+import { sidebar } from './sidebarModule';
 
 const DATACONTROL = (function() {
     const projects =  [
@@ -51,6 +52,7 @@ const DATACONTROL = (function() {
             }
         }
         QuickAddForm.closeForm();
+        sidebar.updateSidebar(getProjects);
     }
 
     const validateQuickAdd = function(title, description, project, newProject) {
@@ -63,7 +65,13 @@ const DATACONTROL = (function() {
         }
     }
 
-    return {createNewProject, createNewToDo, optionTagCreator, quickAdd};
+    const getProjects = function() {
+        return projects;
+    }
+
+    return {createNewProject, createNewToDo, optionTagCreator, quickAdd, getProjects};
 })();
 
+sidebar.generateProjectNames(DATACONTROL.getProjects);
+sidebar.menuBtn.addEventListener("click", sidebar.toggleSidebar);
 QuickAddForm.quickAddBtn.addEventListener("click", () => QuickAddForm.openForm(DATACONTROL.optionTagCreator, DATACONTROL.quickAdd));
