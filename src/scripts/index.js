@@ -5,12 +5,27 @@ import { QuickAddForm } from './quickAddFormModule';
 import { sidebar } from './sidebarModule';
 
 const DATACONTROL = (function() {
-    const projects =  [
+
+    let localStorageAvailable = null;
+
+    let projects =  [
         {projectName: "Tasks",
         entries: []},
         {projectName: "Tasks2",
         entries: []}
     ];
+
+    const initializeLocalStorage = function() {
+
+        if (typeof(Storage) !== "undefined") {
+            localStorageAvailable = true;
+            } else {
+            localStorageAvailable = false;
+        }
+        if (window.localStorage.getItem('localProjects')) {
+            projects = JSON.parse(window.localStorage.getItem('localProjects'));
+        }
+    }
 
     const createNewToDo = function(title, description, priority) {
         return {title, description, priority};
@@ -51,6 +66,8 @@ const DATACONTROL = (function() {
                 projects[i].entries.push(createNewToDo(title, description, QuickAddForm.getPriority()));
             }
         }
+
+        if (localStorageAvailable) window.localStorage.setItem('localProjects', JSON.stringify(projects));
         QuickAddForm.closeForm();
         sidebar.updateSidebar(getProjects);
     }
@@ -69,6 +86,7 @@ const DATACONTROL = (function() {
         return projects;
     }
 
+    initializeLocalStorage();
     return {createNewProject, createNewToDo, optionTagCreator, quickAdd, getProjects};
 })();
 
