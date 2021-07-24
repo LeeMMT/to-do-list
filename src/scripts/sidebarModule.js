@@ -20,6 +20,7 @@ const sidebar = (function() {
 
             if (obj.entries.length > 0) {
                 const num = document.createElement("p");
+                num.classList.add("task-num");
                 num.textContent = obj.entries.length;
                 horizontalDiv.appendChild(num);
             }
