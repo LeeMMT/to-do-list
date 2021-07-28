@@ -3,15 +3,14 @@ import '../css/cssreset.css'
 import '../css/style.css';
 import { QuickAddForm } from './quickAddFormModule';
 import { sidebar } from './sidebarModule';
+import { display } from './displayModule';
 
 const DATACONTROL = (function() {
 
     let localStorageAvailable = null;
 
     let projects =  [
-        {projectName: "Tasks",
-        entries: []},
-        {projectName: "Tasks2",
+        {projectName: "Example Project",
         entries: []}
     ];
 
@@ -35,16 +34,28 @@ const DATACONTROL = (function() {
         return {projectName, entries: []};
     }
 
+    const removeTask = function() {
+        
+    }
+
+    const checkOptionLength = function(option) {
+        if (option.length > 40) {
+            return option.slice(0, 41) + "...";
+        } else {
+            return option;
+        }
+    }
+
     const optionTagCreator = function() {
         const arrayOfProjects = [];
         for (let i = 0; i < projects.length; i++) {
             const optionTag = document.createElement("option");
             optionTag.setAttribute("value", `${projects[i].projectName}`);
-            optionTag.textContent = `${projects[i].projectName}`; 
+            optionTag.textContent = checkOptionLength(projects[i].projectName);
             arrayOfProjects.push(optionTag);
+            };
+            return arrayOfProjects;
         };
-        return arrayOfProjects;
-    };
 
     const quickAdd = function() {
 
@@ -93,3 +104,4 @@ const DATACONTROL = (function() {
 sidebar.generateProjectNames(DATACONTROL.getProjects);
 sidebar.menuBtn.addEventListener("click", sidebar.toggleSidebar);
 QuickAddForm.quickAddBtn.addEventListener("click", () => QuickAddForm.openForm(DATACONTROL.optionTagCreator, DATACONTROL.quickAdd));
+display.displayData(DATACONTROL.getProjects);

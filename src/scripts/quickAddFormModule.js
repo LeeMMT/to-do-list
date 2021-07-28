@@ -79,10 +79,13 @@ const QuickAddForm = (function() {
         
         setTimeout(() => {
             quickAddBtn.children[0].classList.toggle("add-icon-rotated");
+            document.querySelector(".dark-bg").classList.toggle("visible");
+            document.querySelector("body").classList.toggle("hidden");
+            document.querySelector("body > .container").classList.toggle("blur");
         }, 0);
 
         document.querySelector("#utility-bar").remove();
-        document.querySelector(".quickAddGrid").remove();
+        document.querySelector(".form-bg").remove();
         priorityLevel = "Low";
     }
 
@@ -94,7 +97,13 @@ const QuickAddForm = (function() {
 
         setTimeout(() => {
             quickAddBtn.children[0].classList.toggle("add-icon-rotated");
+            document.querySelector(".dark-bg").classList.toggle("visible");
+            document.querySelector("body").classList.toggle("hidden");
+            document.querySelector("body > .container").classList.toggle("blur");
         }, 0);
+
+        const formBg = document.createElement("div");
+        formBg.classList.add("form-bg");
 
         const utilityBar = document.createElement("div");
         utilityBar.setAttribute("id", "utility-bar");
@@ -150,7 +159,7 @@ const QuickAddForm = (function() {
         const newProjectLabel = document.createElement("label");
         newProjectLabel.setAttribute("for", "newProject");
         newProjectLabel.style.display = "none";
-        newProjectLabel.textContent = "Or create a new project";
+        newProjectLabel.textContent = "Or create a new project...";
 
         const newProjectInput = document.createElement("input");
         newProjectInput.setAttribute("type", "text");
@@ -196,7 +205,9 @@ const QuickAddForm = (function() {
 
         form.appendChild(flexHorizontal);
 
-        document.querySelector("#main-body").appendChild(form);
+        formBg.appendChild(form);
+
+        document.querySelector("body").appendChild(formBg);
 
         priorityIconBg.addEventListener("click", openPriority);
 

@@ -10,6 +10,28 @@ body {
     font-family: open-reg, Arial, Helvetica, sans-serif;
     font-size: 16px;
     color: #202020;
+    transform: translateZ(0);
+}
+
+.dark-bg {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: #202020;
+  opacity: 0.3;
+  display: none;
+}
+
+.hidden {
+  overflow: hidden;
+}
+
+.visible {
+  display: initial !important;
+}
+
+.blur {
+  filter: blur(1px);
 }
 
 .container {
@@ -61,14 +83,23 @@ button {
 
 /*Repeated use*/
 
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
 .flex-horizontal {
   display: flex;
+}
+
+.semi-b {
+  font-family: 'open-semi-b';
 }
 
 .sidebar .flex-horizontal {
   align-items: center;
   justify-content: space-between;
-  padding: 10px 0;
+  padding: 10px 8px;
   border-radius: 4px;
   margin: 0;
 }
@@ -146,7 +177,7 @@ nav a {
 }
 
 #project-list p {
-  max-width: 140px;
+  max-width: 148px;
   margin-left: 6px;
   white-space: nowrap; 
   overflow: hidden;
@@ -166,6 +197,19 @@ nav a {
   margin-top: 32px;
 }
 
+.form-bg {
+  position: fixed;
+  height: max-content;
+  width: max-content;
+  border-radius: 4px;
+  background-color: #F3F6F7;
+  padding: 16px;
+  box-shadow: 0px 3px 6px 0px hsla(0, 0%, 0%, 0.2);
+  top: 90px;
+  left: 50%;
+  transform: translate(-50%);
+}
+
 .quickAddGrid {
   display: grid;
   grid-template-columns: 100px 1fr;
@@ -176,8 +220,6 @@ nav a {
                        "project-l project"
                        ".    add";
   width: 600px;
-  height: max-content;
-  margin: 32px auto 0 auto;
   transform: translateZ(0);
 }
 
@@ -188,8 +230,8 @@ nav a {
 
 #priority-div {
   position: fixed;
-  top: -16px;
-  right: -16px;
+  top: 0px;
+  right: 0px;
   width: 200px;
   border-radius: 4px;
   background-color: #F3F6F7;
@@ -280,6 +322,54 @@ button:hover {
   width: 100%;
 }
 
+#new-project {
+  width: 209px;
+}
+
+/*projects and task area */
+
+#project-task-area {
+  display: flex;
+  flex-direction: column;
+  margin: 32px auto 0 auto;
+  max-width: 800px;
+}
+
+.flex-column > p {
+  margin: 8px 0 0 18px;
+}
+
+#project-task-area .flex-horizontal {
+  align-items: center;
+  margin-top: 12px;
+}
+
+#project-task-area > .flex-horizontal:first-of-type {
+  margin-top: 0;
+}
+
+#task-div .flex-horizontal {
+  align-items: center;
+  margin-top: 12px;
+}
+
+#task-div .flex-horizontal:last-of-type {
+  margin-bottom: 12px;
+}
+
+.task-div {
+  display: none;
+  color: #333333;
+}
+
+.task {
+  margin-top: 12px;
+}
+
+.task.flex-horizontal {
+  align-items: center;
+}
+
 /*Fonts*/
 
 @font-face {
@@ -319,6 +409,17 @@ button:hover {
   width: 30px;
   border-radius: 6px;
   margin-left: 12px;
+}
+
+.icon-bg.small {
+  height: 22px;
+  width: 22px;
+  margin: 0 8px 0 -6px;
+}
+
+.icon-bg.small:hover {
+  background-color: #E4EBEC;
+  cursor: pointer;
 }
 
 .icon-bg:hover {
@@ -413,20 +514,40 @@ button:hover {
   width: 16px;
 }
 
-.arrow-down-icon {
+.arrow-right-icon {
   display: block;
-  background-image: url('../assets/icons/arrow-down.svg');
+  background-image: url('../assets/icons/arrow-right.svg');
   background-repeat: no-repeat;
   background-size: contain;
   height: 10px;
   width: 10px;
-  margin-right: 8px;
+  transition: all 0.4s;
 }
 
-.bullet-icon {
+.rotated-90 {
+  transform: rotate(90deg);
+}
+
+.bullet-icon-grey {
   height: 10px;
   width: 10px;
   border-radius: 50%;
-  background-color: #549735;
+  background-color: #B8B8B8;
+  margin-right: 8px;
+}
+
+.bullet-icon-orange {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: #F19A3E;
+  margin-right: 8px;
+}
+
+.bullet-icon-red {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: #C3423F;
   margin-right: 8px;
 }
