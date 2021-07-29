@@ -160,9 +160,9 @@ nav a {
 .sidebar {
   display: initial !important;
   height: 500px;
-  width: 200px;
+  width: 275px;
   padding: 36px 0 0 36px;
-  margin-left: -200px;
+  margin-left: -275px;
   color: #333333;
   transition: all 0.4s;
 }
@@ -177,8 +177,7 @@ nav a {
 }
 
 #project-list p {
-  max-width: 148px;
-  margin-left: 6px;
+  max-width: 200px;
   white-space: nowrap; 
   overflow: hidden;
   text-overflow: ellipsis;
@@ -236,6 +235,7 @@ nav a {
   border-radius: 4px;
   background-color: #F3F6F7;
   border: 1px solid #B8B8B8;
+  overflow: hidden;
 }
 
 #priority-div .flex-horizontal {
@@ -341,11 +341,19 @@ button:hover {
 
 #project-task-area .flex-horizontal {
   align-items: center;
-  margin-top: 12px;
+  margin-top: 18px;
+}
+
+#project-task-area > .flex-horizontal {
+  margin-top: 8px;
 }
 
 #project-task-area > .flex-horizontal:first-of-type {
   margin-top: 0;
+}
+
+#project-task-area > .flex-horizontal:last-of-type {
+  margin-top: 18px;
 }
 
 #task-div .flex-horizontal {
@@ -362,12 +370,22 @@ button:hover {
   color: #333333;
 }
 
+.task-div.flex-column.visible {
+  margin-bottom: 10px;
+}
+
+.task-div .semi-b {
+  color: #202020;
+}
+
 .task {
   margin-top: 12px;
 }
 
 .task.flex-horizontal {
   align-items: center;
+  padding-top: 6px;
+  border-top: solid 1px #DAE3E7;
 }
 
 /*Fonts*/

@@ -60,8 +60,8 @@ const display = (function(getProjects) {
                 }
 
                 const taskTitle = document.createElement("p");
-                taskTitle.textContent = item.title;
                 taskTitle.classList.add("semi-b");
+                taskTitle.textContent = item.title;
 
                 const taskDescription = document.createElement("p");
                 taskDescription.textContent = item.description;
