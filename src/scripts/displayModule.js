@@ -30,7 +30,6 @@ const display = (function(getProjects) {
         div.appendChild(titleDiv);
         
         const tasks = obj.entries;
-        console.log(tasks);
         
         if (tasks) {
             const taskDiv = document.createElement("div");
@@ -45,6 +44,9 @@ const display = (function(getProjects) {
                 const task = document.createElement("div");
                 task.classList.add("task");
                 task.classList.add("flex-horizontal");
+
+                const IconAndTitle = document.createElement("div");
+                IconAndTitle.classList.add("flex-horizontal-inner");
 
                 const bulletIcon = document.createElement("div");
                 switch (item.priority) {
@@ -63,11 +65,18 @@ const display = (function(getProjects) {
                 taskTitle.classList.add("semi-b");
                 taskTitle.textContent = item.title;
 
+                const deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "delete";
+                deleteBtn.classList.add("cancel-btn");
+                deleteBtn.classList.add("font-size-small");
+
                 const taskDescription = document.createElement("p");
                 taskDescription.textContent = item.description;
 
-                task.appendChild(bulletIcon);
-                task.appendChild(taskTitle);
+                IconAndTitle.appendChild(bulletIcon);
+                IconAndTitle.appendChild(taskTitle);
+                task.appendChild(IconAndTitle);
+                task.appendChild(deleteBtn);
                 taskContainer.appendChild(task);
                 taskContainer.appendChild(taskDescription);
                 taskDiv.appendChild(taskContainer);

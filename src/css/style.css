@@ -92,6 +92,11 @@ button {
   display: flex;
 }
 
+.flex-horizontal-inner {
+  display: flex;
+  align-items: center;
+}
+
 .semi-b {
   font-family: 'open-semi-b';
 }
@@ -296,10 +301,15 @@ nav a {
   width: 60px;
   border-radius: 6px;
   padding: 4px;
-  color: #333333;
+  color: #666666;
   background-color: transparent;
   border: none;
   font-size: 16px;
+}
+
+#project-task-area .cancel-btn:hover {
+  cursor: pointer;
+  color: #C3423F;
 }
 
 .cancel-btn:hover {
@@ -332,7 +342,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   margin: 32px auto 0 auto;
-  max-width: 800px;
+  max-width: 750px;
 }
 
 .flex-column > p {
@@ -379,6 +389,8 @@ button:hover {
 }
 
 .task {
+  display: flex;
+  justify-content: space-between;
   margin-top: 12px;
 }
 
@@ -568,4 +580,8 @@ button:hover {
   border-radius: 50%;
   background-color: #C3423F;
   margin-right: 8px;
+}
+
+.font-size-small {
+  font-size: 14px;
 }
