@@ -11,8 +11,9 @@ const DATACONTROL = (function() {
 
     let projects =  [
         {projectName: "Example Project",
-        entries: [],
-        id: 0}
+        id: 0,
+        entries: []
+        }
     ];
 
     const initializeLocalStorage = function() {
@@ -28,26 +29,39 @@ const DATACONTROL = (function() {
     }
 
     const generateId = function(array) {
-        return array.length;
+        if (array.length > 0) {
+            return array.length;
+        } else {
+            return 0;
+        }
     }
 
-    const createNewToDo = function(title, description, priority, project) {
-        let id = null;
-        for (let i = 0; i < projects.length; i++) {
-            if (projects[i].projectName === project) {
-                id = generateId(projects[i].entries);
-            }
+    const decrementId = function(projectId, taskId) {
+
+        for (let i = taskId; i < projects[projectId].entries.length; i++) {
+            projects[projectId].entries[i].id -= 1;
         }
+    }
+
+    const createNewToDo = function(title, description, priority, projectIndex) {
+        const id = generateId(projects[projectIndex].entries);
         return {title, description, priority, id};
     }
 
     const createNewProject = function(projectName) {
         const id = generateId(projects);
-        return {projectName, entries: [], id};
+        return {projectName, id, entries: []};
     }
 
-    const removeTask = function() {
-        
+    const removeTask = function(e) {
+        const projectId = this.getAttribute("data-i");
+        const taskId = this.parentElement.parentElement.getAttribute("data-i");
+        this.parentElement.parentElement.remove();
+        projects[projectId].entries.splice(taskId, 1);
+        decrementId(projectId, taskId);
+
+        if (localStorageAvailable) window.localStorage.setItem('localProjects', JSON.stringify(projects));
+        sidebar.updateSidebar(getProjects);
     }
 
     const checkOptionLength = function(option) {
@@ -86,18 +100,17 @@ const DATACONTROL = (function() {
 
         for (let i = 0; i < projects.length; i++) {
             if (projects[i].projectName === project || newProject) {
-                projects[i].entries.push(createNewToDo(title, description, QuickAddForm.getPriority(), project));
+                const projectIndex = i;
+                projects[i].entries.push(createNewToDo(title, description, QuickAddForm.getPriority(), projectIndex));
             }
         }
 
         if (localStorageAvailable) window.localStorage.setItem('localProjects', JSON.stringify(projects));
         QuickAddForm.closeForm();
         sidebar.updateSidebar(getProjects);
-        console.log(projects);
     }
 
     const taskExists = function(project, taskName) {
-        console.log("working");
         for (let i = 0; i < projects.length; i++) {
             if (projects[i].projectName === project) {
                 return projects[i].entries.find(element => element.title === taskName);
@@ -117,7 +130,6 @@ const DATACONTROL = (function() {
             alert(`A task with the name "${title}" already exists inside "${project}"`);
             return false;
         } else {
-            console.log(projects);
             return true;
         }
     }
@@ -127,10 +139,10 @@ const DATACONTROL = (function() {
     }
 
     initializeLocalStorage();
-    return {createNewProject, createNewToDo, optionTagCreator, quickAdd, getProjects};
+    return {createNewProject, createNewToDo, removeTask, optionTagCreator, quickAdd, getProjects};
 })();
 
 sidebar.generateProjectNames(DATACONTROL.getProjects);
 sidebar.menuBtn.addEventListener("click", sidebar.toggleSidebar);
 QuickAddForm.quickAddBtn.addEventListener("click", () => QuickAddForm.openForm(DATACONTROL.optionTagCreator, DATACONTROL.quickAdd));
-display.displayData(DATACONTROL.getProjects);
+display.displayData(DATACONTROL.getProjects, DATACONTROL.removeTask);

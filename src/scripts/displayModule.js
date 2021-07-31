@@ -1,12 +1,11 @@
 const display = (function(getProjects) {
-    let counter = 0;
 
     const div = document.querySelector("#project-task-area");
 
     const showTasks = function(e) {
         setTimeout(() => {
             this.children[0].classList.toggle("rotated-90");
-            document.querySelector(`[data-i="${this.getAttribute('data-i')}"].task-div`).classList.toggle("visible");
+            document.querySelector(`div[data-i="${this.getAttribute('data-i')}"].task-div`).classList.toggle("visible");
         }, 0);
     }
 
@@ -18,7 +17,7 @@ const display = (function(getProjects) {
         const arrowIcon = document.createElement("i");
         iconBg.classList.add("icon-bg");
         iconBg.classList.add("small");
-        iconBg.setAttribute("data-i", counter);
+        iconBg.setAttribute("data-i", obj.id);
         arrowIcon.classList.add("arrow-right-icon");
         iconBg.appendChild(arrowIcon);
 
@@ -35,10 +34,11 @@ const display = (function(getProjects) {
             const taskDiv = document.createElement("div");
             taskDiv.classList.add("task-div");
             taskDiv.classList.add("flex-column");
-            taskDiv.setAttribute("data-i", counter);
+            taskDiv.setAttribute("data-i", obj.id);
             tasks.forEach(item => {
 
                 const taskContainer = document.createElement("div");
+                taskContainer.setAttribute("data-i", item.id);
                 taskContainer.classList.add("flex-column");
                 
                 const task = document.createElement("div");
@@ -67,6 +67,7 @@ const display = (function(getProjects) {
 
                 const deleteBtn = document.createElement("button");
                 deleteBtn.textContent = "delete";
+                deleteBtn.setAttribute("data-i", obj.id);
                 deleteBtn.classList.add("cancel-btn");
                 deleteBtn.classList.add("font-size-small");
 
@@ -83,15 +84,17 @@ const display = (function(getProjects) {
             });
             div.appendChild(taskDiv);
         }
-        counter++;
     }
 
-    const displayData = function(getProjects) {
+    const displayData = function(getProjects, removeTask) {
 
         getProjects().forEach(loopData);
-        const arrowIcons = document.querySelectorAll("#project-task-area .icon-bg")
+        const arrowIcons = document.querySelectorAll("#project-task-area .icon-bg");
         arrowIcons.forEach(item => item.addEventListener("click", showTasks));
-        counter = 0;
+        
+        const deleteBtns = document.querySelectorAll(".cancel-btn");
+        deleteBtns.forEach(item => item.addEventListener("click", removeTask));
+        console.log(getProjects());
     }
 
     return {displayData};
