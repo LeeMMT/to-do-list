@@ -108,6 +108,10 @@ const DATACONTROL = (function() {
         if (localStorageAvailable) window.localStorage.setItem('localProjects', JSON.stringify(projects));
         QuickAddForm.closeForm();
         sidebar.updateSidebar(getProjects);
+
+        let projectToPass = (project) ? project : newProject;
+        projectToPass = projects.find(element => element.projectName === projectToPass);
+        display.displayNewTask(projectToPass);
     }
 
     const taskExists = function(project, taskName) {
