@@ -9,7 +9,7 @@ const display = (function(getProjects) {
         }, 0);
     }
 
-    const createTaskContainer = function(item) {
+    const createTaskContainer = function(item, projectId) {
         const taskContainer = document.createElement("div");
                 taskContainer.setAttribute("data-i", item.id);
                 taskContainer.classList.add("flex-column");
@@ -40,7 +40,7 @@ const display = (function(getProjects) {
 
                 const deleteBtn = document.createElement("button");
                 deleteBtn.textContent = "delete";
-                deleteBtn.setAttribute("data-i", obj.id);
+                deleteBtn.setAttribute("data-i", item.id);
                 deleteBtn.classList.add("cancel-btn");
                 deleteBtn.classList.add("font-size-small");
 
@@ -53,7 +53,7 @@ const display = (function(getProjects) {
                 task.appendChild(deleteBtn);
                 taskContainer.appendChild(task);
                 taskContainer.appendChild(taskDescription);
-                taskDiv.appendChild(taskContainer);
+                document.querySelector(`.task-div[data-i="${projectId}"]`).appendChild(taskContainer);
     }
 
     const loopData = function(obj) {
@@ -82,54 +82,8 @@ const display = (function(getProjects) {
             taskDiv.classList.add("task-div");
             taskDiv.classList.add("flex-column");
             taskDiv.setAttribute("data-i", obj.id);
-            tasks.forEach(item => {
-
-                const taskContainer = document.createElement("div");
-                taskContainer.setAttribute("data-i", item.id);
-                taskContainer.classList.add("flex-column");
-                
-                const task = document.createElement("div");
-                task.classList.add("task");
-                task.classList.add("flex-horizontal");
-
-                const IconAndTitle = document.createElement("div");
-                IconAndTitle.classList.add("flex-horizontal-inner");
-
-                const bulletIcon = document.createElement("div");
-                switch (item.priority) {
-                    case "Low":
-                        bulletIcon.classList.add("bullet-icon-grey");
-                        break;
-                    case "Medium":
-                        bulletIcon.classList.add("bullet-icon-orange");
-                        break;
-                    case "High":
-                        bulletIcon.classList.add("bullet-icon-red");
-                        break;
-                }
-
-                const taskTitle = document.createElement("p");
-                taskTitle.classList.add("semi-b");
-                taskTitle.textContent = item.title;
-
-                const deleteBtn = document.createElement("button");
-                deleteBtn.textContent = "delete";
-                deleteBtn.setAttribute("data-i", obj.id);
-                deleteBtn.classList.add("cancel-btn");
-                deleteBtn.classList.add("font-size-small");
-
-                const taskDescription = document.createElement("p");
-                taskDescription.textContent = item.description;
-
-                IconAndTitle.appendChild(bulletIcon);
-                IconAndTitle.appendChild(taskTitle);
-                task.appendChild(IconAndTitle);
-                task.appendChild(deleteBtn);
-                taskContainer.appendChild(task);
-                taskContainer.appendChild(taskDescription);
-                taskDiv.appendChild(taskContainer);
-            });
             div.appendChild(taskDiv);
+            tasks.forEach(item => createTaskContainer(item, obj.id));
         }
     }
 
@@ -146,7 +100,7 @@ const display = (function(getProjects) {
     const displayNewTask = function(project) {
         const id = project.id;
         const taskDiv = document.querySelector(`.task-div[data-i="${id}"]`);
-        
+        createTaskContainer(project.entries[project.entries.length - 1], id);
     }
 
     return {displayData, displayNewTask};

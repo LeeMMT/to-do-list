@@ -40,7 +40,10 @@ const DATACONTROL = (function() {
 
         for (let i = taskId; i < projects[projectId].entries.length; i++) {
             projects[projectId].entries[i].id -= 1;
+            const newId = projects[projectId].entries[i].id;
+            document.querySelector(`.task-div[data-i="${projectId}"] button[data-i="${+i+1}"]`).setAttribute("data-i", `${newId}`);
         }
+    
     }
 
     const createNewToDo = function(title, description, priority, projectIndex) {
@@ -54,8 +57,8 @@ const DATACONTROL = (function() {
     }
 
     const removeTask = function(e) {
-        const projectId = this.getAttribute("data-i");
-        const taskId = this.parentElement.parentElement.getAttribute("data-i");
+        const projectId = this.parentElement.parentElement.parentElement.getAttribute("data-i");
+        const taskId = this.getAttribute("data-i");
         this.parentElement.parentElement.remove();
         projects[projectId].entries.splice(taskId, 1);
         decrementId(projectId, taskId);
