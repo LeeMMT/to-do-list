@@ -60,6 +60,9 @@ const display = (function(getProjects) {
         const titleDiv = document.createElement("div");
         titleDiv.classList.add("flex-horizontal");
 
+        const iconAndTitle = document.createElement("div");
+        iconAndTitle.classList.add("flex-horizontal-inner");
+
         const iconBg = document.createElement("div");
         const arrowIcon = document.createElement("i");
         iconBg.classList.add("icon-bg");
@@ -71,8 +74,9 @@ const display = (function(getProjects) {
         const title = document.createElement("p");
         title.textContent = obj.projectName;
 
-        titleDiv.appendChild(iconBg);
-        titleDiv.appendChild(title);
+        iconAndTitle.appendChild(iconBg);
+        iconAndTitle.appendChild(title);
+        titleDiv.appendChild(iconAndTitle);
         div.appendChild(titleDiv);
         
         const tasks = obj.entries;
@@ -97,10 +101,12 @@ const display = (function(getProjects) {
         deleteBtns.forEach(item => item.addEventListener("click", removeTask));
     }
 
-    const displayNewTask = function(project) {
+    const displayNewTask = function(project, removeTask) {
         const id = project.id;
         const taskDiv = document.querySelector(`.task-div[data-i="${id}"]`);
         createTaskContainer(project.entries[project.entries.length - 1], id);
+        const deleteBtn = document.querySelector(`.task-div[data-i="${id}"] .cancel-btn[data-i="${project.entries.length - 1}"]`);
+        deleteBtn.addEventListener("click", removeTask);    
     }
 
     return {displayData, displayNewTask};

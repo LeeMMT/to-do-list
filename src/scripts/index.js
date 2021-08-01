@@ -57,6 +57,7 @@ const DATACONTROL = (function() {
     }
 
     const removeTask = function(e) {
+        console.log("working");
         const projectId = this.parentElement.parentElement.parentElement.getAttribute("data-i");
         const taskId = this.getAttribute("data-i");
         this.parentElement.parentElement.remove();
@@ -114,7 +115,7 @@ const DATACONTROL = (function() {
 
         let projectToPass = (project) ? project : newProject;
         projectToPass = projects.find(element => element.projectName === projectToPass);
-        display.displayNewTask(projectToPass);
+        display.displayNewTask(projectToPass, removeTask);
     }
 
     const taskExists = function(project, taskName) {
