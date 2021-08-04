@@ -36,6 +36,12 @@ const DATACONTROL = (function() {
         }
     }
 
+    const decrementProjectId = function(projectId) {
+        for (let i = projectId; i < projects.length + 1; i++) {
+
+        }
+    }
+
     const decrementId = function(projectId, taskId) {
 
         for (let i = taskId; i < projects[projectId].entries.length; i++) {
@@ -57,13 +63,26 @@ const DATACONTROL = (function() {
     }
 
     const removeTask = function(e) {
-        console.log("working");
-        const projectId = this.parentElement.parentElement.parentElement.getAttribute("data-i");
-        const taskId = this.getAttribute("data-i");
-        this.parentElement.parentElement.remove();
-        projects[projectId].entries.splice(taskId, 1);
-        decrementId(projectId, taskId);
+        
+        if (this.classList.contains("projectDelete")) {
+            const projectId = Number(this.getAttribute("data-i"));
+            projects.splice(projectId, 1);
+            document.querySelector(`.task-div[data-i="${projectId}"]`).remove();
+            this.parentElement.remove();
 
+            for (let i = projectId; i < projects.length; i++) {
+                projects[i].id -= 1;
+                document.querySelector(`.projectDelete[data-i="${i + 1}"]`).setAttribute("data-i", `${i}`);
+                document.querySelector(`.task-div[data-i="${i + 1}"]`).setAttribute("data-i", `${i}`);
+            }
+        } else {
+            const projectId = this.parentElement.parentElement.parentElement.getAttribute("data-i");
+            const taskId = this.getAttribute("data-i");
+            this.parentElement.parentElement.remove();
+            projects[projectId].entries.splice(taskId, 1);
+            decrementId(projectId, taskId);
+        }
+        
         if (localStorageAvailable) window.localStorage.setItem('localProjects', JSON.stringify(projects));
         sidebar.updateSidebar(getProjects);
     }
@@ -100,6 +119,7 @@ const DATACONTROL = (function() {
 
         if (!project) {
             projects.push(createNewProject(newProject));
+            display.displayNewProject(projects[projects.length - 1], removeTask);
             }
 
         for (let i = 0; i < projects.length; i++) {

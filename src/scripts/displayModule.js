@@ -9,6 +9,10 @@ const display = (function(getProjects) {
         }, 0);
     }
 
+    const taskHover = function(e) {
+        this.classList.toggle("hovering");
+    }
+
     const createTaskContainer = function(item, projectId) {
         const taskContainer = document.createElement("div");
                 taskContainer.setAttribute("data-i", item.id);
@@ -74,9 +78,17 @@ const display = (function(getProjects) {
         const title = document.createElement("p");
         title.textContent = obj.projectName;
 
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "delete";
+        deleteBtn.setAttribute("data-i", obj.id);
+        deleteBtn.classList.add("cancel-btn");
+        deleteBtn.classList.add("font-size-small");
+        deleteBtn.classList.add("projectDelete");
+
         iconAndTitle.appendChild(iconBg);
         iconAndTitle.appendChild(title);
         titleDiv.appendChild(iconAndTitle);
+        titleDiv.appendChild(deleteBtn);
         div.appendChild(titleDiv);
         
         const tasks = obj.entries;
@@ -99,17 +111,32 @@ const display = (function(getProjects) {
         
         const deleteBtns = document.querySelectorAll(".cancel-btn");
         deleteBtns.forEach(item => item.addEventListener("click", removeTask));
+
+        const taskDivs = document.querySelectorAll(".task");
+        taskDivs.forEach(element => element.addEventListener("mouseenter", taskHover));
+        taskDivs.forEach(element => element.addEventListener("mouseleave", taskHover));
+    }
+
+    const displayNewProject = function(newProject, removeTask) {
+        loopData(newProject);
+        document.querySelector(`#project-task-area .icon-bg[data-i="${newProject.id}"]`).addEventListener("click", showTasks);
+        const deleteBtn = document.querySelector(`.projectDelete[data-i="${newProject.id}"]`);
+        deleteBtn.addEventListener("click", removeTask);
     }
 
     const displayNewTask = function(project, removeTask) {
+        console.log("working");
         const id = project.id;
         const taskDiv = document.querySelector(`.task-div[data-i="${id}"]`);
         createTaskContainer(project.entries[project.entries.length - 1], id);
         const deleteBtn = document.querySelector(`.task-div[data-i="${id}"] .cancel-btn[data-i="${project.entries.length - 1}"]`);
-        deleteBtn.addEventListener("click", removeTask);    
+        deleteBtn.addEventListener("click", removeTask);
+        const task = document.querySelectorAll(`.task-div[data-i="${id}"] .task`);
+        task[task.length].addEventListener("mouseenter", taskHover);
+        task[task.length].addEventListener("mouseleave", taskHover);
     }
 
-    return {displayData, displayNewTask};
+    return {displayData, displayNewProject, displayNewTask};
 })();
 
 export {display};

@@ -356,6 +356,7 @@ button:hover {
 
 #project-task-area > .flex-horizontal {
   margin-top: 8px;
+  justify-content: space-between;
 }
 
 #project-task-area > .flex-horizontal:first-of-type {
@@ -398,6 +399,14 @@ button:hover {
   align-items: center;
   padding-top: 6px;
   border-top: solid 1px #DAE3E7;
+}
+
+.task .cancel-btn {
+  visibility: hidden;
+}
+
+.task.hovering .cancel-btn {
+  visibility: initial;
 }
 
 /*Fonts*/
