@@ -78,7 +78,7 @@ const DATACONTROL = (function() {
         } else {
             const projectId = this.parentElement.parentElement.parentElement.getAttribute("data-i");
             const taskId = this.getAttribute("data-i");
-            this.parentElement.parentElement.remove();
+            this.parentElement.parentElement.parentElement.remove();
             projects[projectId].entries.splice(taskId, 1);
             decrementId(projectId, taskId);
         }
@@ -110,6 +110,7 @@ const DATACONTROL = (function() {
 
         const title = document.querySelector("#title").value;
         const description = document.querySelector("#description").value;
+        const selectTag = document.querySelector("#project");
         const project = document.querySelector("#project").value;
         const newProject = document.querySelector("#new-project").value;
 
@@ -122,12 +123,14 @@ const DATACONTROL = (function() {
             display.displayNewProject(projects[projects.length - 1], removeTask);
             }
 
-        for (let i = 0; i < projects.length; i++) {
-            if (projects[i].projectName === project || newProject) {
-                const projectIndex = i;
-                projects[i].entries.push(createNewToDo(title, description, QuickAddForm.getPriority(), projectIndex));
-            }
-        }
+        if (project) {
+            const index = selectTag.selectedIndex - 1;
+            projects[index].entries.push(createNewToDo(title, description, QuickAddForm.getPriority(), index));
+        } else {
+            const index = projects[projects.length - 1].id;
+            projects[index].entries.push(createNewToDo(title, description, QuickAddForm.getPriority(), index));
+        };
+        
 
         if (localStorageAvailable) window.localStorage.setItem('localProjects', JSON.stringify(projects));
         QuickAddForm.closeForm();

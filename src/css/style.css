@@ -297,6 +297,21 @@ nav a {
   margin-left: 8px;
 }
 
+.edit-btn {
+  width: 60px;
+  border-radius: 6px;
+  padding: 4px;
+  color: #666666;
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+}
+
+.edit-btn:hover {
+  color: #F19A3E;
+  text-decoration: underline;
+}
+
 .cancel-btn {
   width: 60px;
   border-radius: 6px;
@@ -343,6 +358,7 @@ button:hover {
   flex-direction: column;
   margin: 32px auto 0 auto;
   max-width: 750px;
+  line-height: 1.4em;
 }
 
 .flex-column > p {
@@ -401,11 +417,11 @@ button:hover {
   border-top: solid 1px #DAE3E7;
 }
 
-.task .cancel-btn {
+.task .cancel-btn, .task .edit-btn {
   visibility: hidden;
 }
 
-.task.hovering .cancel-btn {
+.hovering .cancel-btn, .hovering .edit-btn {
   visibility: initial;
 }
 

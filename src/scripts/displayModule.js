@@ -25,6 +25,9 @@ const display = (function(getProjects) {
                 const IconAndTitle = document.createElement("div");
                 IconAndTitle.classList.add("flex-horizontal-inner");
 
+                const buttonDiv = document.createElement("div");
+                buttonDiv.classList.add("flex-horizontal-inner");
+
                 const bulletIcon = document.createElement("div");
                 switch (item.priority) {
                     case "Low":
@@ -42,6 +45,12 @@ const display = (function(getProjects) {
                 taskTitle.classList.add("semi-b");
                 taskTitle.textContent = item.title;
 
+                const editBtn = document.createElement("button");
+                editBtn.textContent = "edit";
+                editBtn.setAttribute("data-i", item.id);
+                editBtn.classList.add("edit-btn");
+                editBtn.classList.add("font-size-small");
+
                 const deleteBtn = document.createElement("button");
                 deleteBtn.textContent = "delete";
                 deleteBtn.setAttribute("data-i", item.id);
@@ -54,7 +63,9 @@ const display = (function(getProjects) {
                 IconAndTitle.appendChild(bulletIcon);
                 IconAndTitle.appendChild(taskTitle);
                 task.appendChild(IconAndTitle);
-                task.appendChild(deleteBtn);
+                buttonDiv.appendChild(editBtn);
+                buttonDiv.appendChild(deleteBtn);
+                task.appendChild(buttonDiv);
                 taskContainer.appendChild(task);
                 taskContainer.appendChild(taskDescription);
                 document.querySelector(`.task-div[data-i="${projectId}"]`).appendChild(taskContainer);
@@ -112,7 +123,7 @@ const display = (function(getProjects) {
         const deleteBtns = document.querySelectorAll(".cancel-btn");
         deleteBtns.forEach(item => item.addEventListener("click", removeTask));
 
-        const taskDivs = document.querySelectorAll(".task");
+        const taskDivs = document.querySelectorAll(".task-div div.flex-column");
         taskDivs.forEach(element => element.addEventListener("mouseenter", taskHover));
         taskDivs.forEach(element => element.addEventListener("mouseleave", taskHover));
     }
@@ -125,15 +136,14 @@ const display = (function(getProjects) {
     }
 
     const displayNewTask = function(project, removeTask) {
-        console.log("working");
         const id = project.id;
         const taskDiv = document.querySelector(`.task-div[data-i="${id}"]`);
         createTaskContainer(project.entries[project.entries.length - 1], id);
         const deleteBtn = document.querySelector(`.task-div[data-i="${id}"] .cancel-btn[data-i="${project.entries.length - 1}"]`);
         deleteBtn.addEventListener("click", removeTask);
-        const task = document.querySelectorAll(`.task-div[data-i="${id}"] .task`);
-        task[task.length].addEventListener("mouseenter", taskHover);
-        task[task.length].addEventListener("mouseleave", taskHover);
+        const task = document.querySelector(`.task-div[data-i="${id}"] .flex-column[data-i="${project.entries[project.entries.length - 1].id}"]`);
+        task.addEventListener("mouseenter", taskHover);
+        task.addEventListener("mouseleave", taskHover);
     }
 
     return {displayData, displayNewProject, displayNewTask};
