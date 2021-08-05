@@ -89,58 +89,9 @@ const QuickAddForm = (function() {
         priorityLevel = "Low";
     }
 
-    const openFormSeg1 = function() {
-        if (document.querySelector(".quickAddGrid")) {
-            closeForm();
-            return;
-        };
-
-        setTimeout(() => {
-            quickAddBtn.children[0].classList.toggle("add-icon-rotated");
-            document.querySelector(".dark-bg").classList.toggle("visible");
-            document.querySelector("body").classList.toggle("hidden");
-            document.querySelector("body > .container").classList.toggle("blur");
-        }, 0);
-
-        const formBg = document.createElement("div");
-        formBg.classList.add("form-bg");
-
-        const utilityBar = document.createElement("div");
-        utilityBar.setAttribute("id", "utility-bar");
-        utilityBar.classList.add("flex-horizontal");
-
-        const priorityIconBg = document.createElement("div");
-        priorityIconBg.classList.add("utility-icon-bg");
-
-        const priorityIcon = document.createElement("i");
-        priorityIcon.classList.add("flag-grey-icon");
-
-        const form = document.createElement("form");
-        form.classList.add("quickAddGrid");
-
-        const titleLabel = document.createElement("label");
-        titleLabel.setAttribute("for", "title");
-        titleLabel.setAttribute("id", "title-l");
-        titleLabel.textContent = "Title:";
-
-        const titleInput = document.createElement("input");
-        titleInput.setAttribute("type", "text");
-        titleInput.setAttribute("id", "title");
-        titleInput.setAttribute("name", "title");
-
-        const descriptionLabel = document.createElement("label");
-        descriptionLabel.setAttribute("for", "description");
-        descriptionLabel.setAttribute("id", "description-l");
-        descriptionLabel.textContent = "Description:";
-
-        const descriptionInput = document.createElement("textarea");
-        descriptionInput.setAttribute("id", "description");
-        descriptionInput.setAttribute("name", "description");
-    }
-
     const openForm = function(optionCallback, quickAddCallback) {
         
-        if (document.querySelector(".quickAddGrid")) {
+        if (document.querySelector(".quickAddGrid") || document.querySelector(".edit-task-grid")) {
             closeForm();
             return;
         };
@@ -270,8 +221,80 @@ const QuickAddForm = (function() {
         addBtn.addEventListener("click", quickAddCallback);
     }
 
-    const editTask = function() {
+    const openEdit = function(e, getProjects) {
 
+        if (document.querySelector(".quickAddGrid") || document.querySelector(".edit-task-grid")) {
+            closeForm();
+            return;
+        };
+
+        const projectId = Number(e.srcElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-i"));
+        const taskId = Number(e.srcElement.getAttribute("data-i"));
+        const projects = getProjects();
+        console.log(projects);
+
+        setTimeout(() => {
+            quickAddBtn.children[0].classList.toggle("add-icon-rotated");
+            document.querySelector(".dark-bg").classList.toggle("visible");
+            document.querySelector("body").classList.toggle("hidden");
+            document.querySelector("body > .container").classList.toggle("blur");
+        }, 0);
+
+        const formBg = document.createElement("div");
+        formBg.classList.add("form-bg");
+
+        const utilityBar = document.createElement("div");
+        utilityBar.setAttribute("id", "utility-bar");
+        utilityBar.classList.add("flex-horizontal");
+
+        const header = document.createElement("p");
+        header.classList.add("font-size-small");
+        header.classList.add("edit-header");
+        header.textContent = "edit task...";
+
+        const priorityIconBg = document.createElement("div");
+        priorityIconBg.classList.add("utility-icon-bg");
+
+        const priorityIcon = document.createElement("i");
+        let priorityLevel;
+        switch (projects[projectId].entries[taskId].priority) {
+            case "Low":
+                priorityLevel = "grey";
+                break;
+            case "Medium":
+                priorityLevel = "orange";
+                break;
+            case "High":
+                priorityLevel = "red";
+                break;
+        }
+        console.log(priorityLevel);
+        priorityIcon.classList.add(`flag-${priorityLevel}-icon`);
+
+        const form = document.createElement("form");
+        form.classList.add("edit-task-grid");
+
+        const titleLabel = document.createElement("label");
+        titleLabel.setAttribute("for", "title");
+        titleLabel.setAttribute("id", "title-l");
+        titleLabel.textContent = "Title:";
+
+        const titleInput = document.createElement("input");
+        titleInput.setAttribute("type", "text");
+        titleInput.setAttribute("id", "title");
+        titleInput.setAttribute("name", "title");
+        titleInput.value = projects[projectId].entries[taskId].title;
+        
+
+        const descriptionLabel = document.createElement("label");
+        descriptionLabel.setAttribute("for", "description");
+        descriptionLabel.setAttribute("id", "description-l");
+        descriptionLabel.value = "Description:";
+
+        const descriptionInput = document.createElement("textarea");
+        descriptionInput.setAttribute("id", "description");
+        descriptionInput.setAttribute("name", "description");
+        descriptionInput.textContent = projects[projectId].entries[taskId].description;
 
         const flexHorizontal = document.createElement("div");
         flexHorizontal.classList.add("flex-horizontal");
@@ -282,51 +305,33 @@ const QuickAddForm = (function() {
 
         cancelBtn.addEventListener("click", closeForm);
 
-        const addBtn = document.createElement("button");
-        addBtn.classList.add("add-btn");
-        addBtn.textContent = "Add";
-        addBtn.setAttribute("type", "button");
+        const saveBtn = document.createElement("button");
+        saveBtn.classList.add("add-btn");
+        saveBtn.textContent = "Save";
+        saveBtn.setAttribute("type", "button");
 
         priorityIconBg.appendChild(priorityIcon);
+        utilityBar.appendChild(header);
         utilityBar.appendChild(priorityIconBg);
         form.appendChild(utilityBar);
         form.appendChild(titleLabel);
         form.appendChild(titleInput);
         form.appendChild(descriptionLabel);
         form.appendChild(descriptionInput);
-        form.appendChild(projectLabel);
-
-        select.appendChild(opt1);
-        const optionArray = optionCallback();
-        optionArray.forEach(item => select.appendChild(item));
-
-        projectRow.appendChild(select);
-        projectRow.appendChild(newProjectLabel);
-        projectRow.appendChild(newProjectInput);
-
-        form.appendChild(projectRow);
 
         flexHorizontal.appendChild(cancelBtn);
-        flexHorizontal.appendChild(addBtn);
+        flexHorizontal.appendChild(saveBtn);
 
         form.appendChild(flexHorizontal);
 
         formBg.appendChild(form);
 
-        document.querySelector("body").appendChild(formBg);
+        document.body.appendChild(formBg);
 
         priorityIconBg.addEventListener("click", openPriority);
-
-        const existingOrNew = function(e) {
-            (this.id === "project") ? newProjectInput.value = "" : select.selectedIndex = 0;
-        }
-
-        select.addEventListener("change", existingOrNew);
-        newProjectInput.addEventListener("input", existingOrNew);
-        addBtn.addEventListener("click", quickAddCallback);
     }
 
-    return {quickAddBtn, openForm, closeForm, openPriority, priorityLevel, getPriority};
+    return {quickAddBtn, openForm, openEdit, closeForm, openPriority, priorityLevel, getPriority};
 })();
 
 export {QuickAddForm};

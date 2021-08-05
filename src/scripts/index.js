@@ -10,9 +10,30 @@ const DATACONTROL = (function() {
     let localStorageAvailable = null;
 
     let projects =  [
-        {projectName: "Example Project",
+        {projectName: "How to Use",
         id: 0,
-        entries: []
+        entries: [{
+            title: `Delete projects and Tasks`,
+            description: `To delete a project, use the delete button adjacent to a project's title. To delete a task, simply hover over the task you wish to 
+            delete. Doing so will cause the "delete" and "edit" buttons for that task to become visible.`,
+            priority: `Low`,
+            id: 0,
+            },
+            {
+            title: `Edit your tasks`,
+            description: `To edit the information in a task, hover over a task and click the edit button. You can edit a task's title, description, and 
+            priority.`,
+            priority: `Medium`,
+            id: 1,
+            },
+            {
+            title: `The sidebar`,
+            description: `The sidebar, brought up by clicking the menu icon in the top-left, presents you with a list of all of your projects, as well as the 
+            number of tasks that each hold. If you can't find the project you are looking for, try clicking the corresponding project name in the sidebar.`,
+            priority: `High`,
+            id: 2,
+            }
+        ]
         }
     ];
 
@@ -47,7 +68,8 @@ const DATACONTROL = (function() {
         for (let i = taskId; i < projects[projectId].entries.length; i++) {
             projects[projectId].entries[i].id -= 1;
             const newId = projects[projectId].entries[i].id;
-            document.querySelector(`.task-div[data-i="${projectId}"] button[data-i="${+i+1}"]`).setAttribute("data-i", `${newId}`);
+            document.querySelector(`.task-div[data-i="${projectId}"] .edit-btn[data-i="${+i+1}"]`).setAttribute("data-i", `${i}`);
+            document.querySelector(`.task-div[data-i="${projectId}"] .cancel-btn[data-i="${+i+1}"]`).setAttribute("data-i", `${i}`);
         }
     
     }
@@ -76,8 +98,10 @@ const DATACONTROL = (function() {
                 document.querySelector(`.task-div[data-i="${i + 1}"]`).setAttribute("data-i", `${i}`);
             }
         } else {
-            const projectId = this.parentElement.parentElement.parentElement.getAttribute("data-i");
+            const projectId = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-i");
             const taskId = this.getAttribute("data-i");
+            console.log(projectId);
+            console.log(taskId);
             this.parentElement.parentElement.parentElement.remove();
             projects[projectId].entries.splice(taskId, 1);
             decrementId(projectId, taskId);
@@ -138,7 +162,7 @@ const DATACONTROL = (function() {
 
         let projectToPass = (project) ? project : newProject;
         projectToPass = projects.find(element => element.projectName === projectToPass);
-        display.displayNewTask(projectToPass, removeTask);
+        display.displayNewTask(projectToPass, removeTask, QuickAddForm.openEdit, getProjects);
     }
 
     const taskExists = function(project, taskName) {
@@ -176,4 +200,4 @@ const DATACONTROL = (function() {
 sidebar.generateProjectNames(DATACONTROL.getProjects);
 sidebar.menuBtn.addEventListener("click", sidebar.toggleSidebar);
 QuickAddForm.quickAddBtn.addEventListener("click", () => QuickAddForm.openForm(DATACONTROL.optionTagCreator, DATACONTROL.quickAdd));
-display.displayData(DATACONTROL.getProjects, DATACONTROL.removeTask);
+display.displayData(DATACONTROL.getProjects, DATACONTROL.removeTask, QuickAddForm.openEdit);

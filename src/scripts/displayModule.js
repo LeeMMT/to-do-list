@@ -1,4 +1,4 @@
-const display = (function(getProjects) {
+const display = (function() {
 
     const div = document.querySelector("#project-task-area");
 
@@ -114,7 +114,7 @@ const display = (function(getProjects) {
         }
     }
 
-    const displayData = function(getProjects, removeTask) {
+    const displayData = function(getProjects, removeTask, openEdit) {
 
         getProjects().forEach(loopData);
         const arrowIcons = document.querySelectorAll("#project-task-area .icon-bg");
@@ -126,6 +126,11 @@ const display = (function(getProjects) {
         const taskDivs = document.querySelectorAll(".task-div div.flex-column");
         taskDivs.forEach(element => element.addEventListener("mouseenter", taskHover));
         taskDivs.forEach(element => element.addEventListener("mouseleave", taskHover));
+        
+        const editBtns = document.querySelectorAll(".edit-btn");
+        editBtns.forEach(element => element.addEventListener("click", e => {
+            openEdit(e, getProjects);
+        }));
     }
 
     const displayNewProject = function(newProject, removeTask) {
@@ -135,12 +140,16 @@ const display = (function(getProjects) {
         deleteBtn.addEventListener("click", removeTask);
     }
 
-    const displayNewTask = function(project, removeTask) {
+    const displayNewTask = function(project, removeTask, openEdit, getProjects) {
         const id = project.id;
         const taskDiv = document.querySelector(`.task-div[data-i="${id}"]`);
         createTaskContainer(project.entries[project.entries.length - 1], id);
         const deleteBtn = document.querySelector(`.task-div[data-i="${id}"] .cancel-btn[data-i="${project.entries.length - 1}"]`);
         deleteBtn.addEventListener("click", removeTask);
+        const editBtn = document.querySelector(`.task-div[data-i="${id}"] .edit-btn[data-i="${project.entries.length - 1}"]`);
+        editBtn.addEventListener("click", ("click", e => {
+            openEdit(e, getProjects);
+        }));;
         const task = document.querySelector(`.task-div[data-i="${id}"] .flex-column[data-i="${project.entries[project.entries.length - 1].id}"]`);
         task.addEventListener("mouseenter", taskHover);
         task.addEventListener("mouseleave", taskHover);

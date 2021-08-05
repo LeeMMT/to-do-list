@@ -227,9 +227,31 @@ nav a {
   transform: translateZ(0);
 }
 
+.edit-task-grid {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  grid-gap: 12px;
+  grid-template-areas: ". priority"
+                       "title-l title"
+                       "description-l description"
+                       ".    add";
+  width: 600px;
+  transform: translateZ(0);
+}
+
 #utility-bar {
   grid-area: priority;
   margin-left: auto;
+}
+
+.edit-task-grid #utility-bar {
+  align-items: center;
+  margin-left: 0;
+  justify-content: space-between;
+}
+
+.edit-header {
+  color: #B8B8B8;
 }
 
 #priority-div {
@@ -308,7 +330,7 @@ nav a {
 }
 
 .edit-btn:hover {
-  color: #F19A3E;
+  color: #333333;
   text-decoration: underline;
 }
 
@@ -336,6 +358,11 @@ button:hover {
 }
 
 .quickAddGrid .flex-horizontal {
+  grid-area: add;
+  margin-left: auto;
+}
+
+.edit-task-grid .flex-horizontal {
   grid-area: add;
   margin-left: auto;
 }
