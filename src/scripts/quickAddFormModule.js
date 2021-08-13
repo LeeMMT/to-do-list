@@ -110,6 +110,11 @@ const QuickAddForm = (function() {
         utilityBar.setAttribute("id", "utility-bar");
         utilityBar.classList.add("flex-horizontal");
 
+        const header = document.createElement("p");
+        header.classList.add("font-size-small");
+        header.classList.add("edit-header");
+        header.textContent = "add a task...";
+
         const priorityIconBg = document.createElement("div");
         priorityIconBg.classList.add("utility-icon-bg");
 
@@ -183,6 +188,7 @@ const QuickAddForm = (function() {
         addBtn.setAttribute("type", "button");
 
         priorityIconBg.appendChild(priorityIcon);
+        utilityBar.appendChild(header);
         utilityBar.appendChild(priorityIconBg);
         form.appendChild(utilityBar);
         form.appendChild(titleLabel);
