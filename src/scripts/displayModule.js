@@ -114,7 +114,7 @@ const display = (function() {
         }
     }
 
-    const displayData = function(getProjects, removeTask, openEdit) {
+    const displayData = function(getProjects, removeTask, openEdit, saveEdit) {
 
         getProjects().forEach(loopData);
         const arrowIcons = document.querySelectorAll("#project-task-area .icon-bg");
@@ -129,7 +129,7 @@ const display = (function() {
         
         const editBtns = document.querySelectorAll(".edit-btn");
         editBtns.forEach(element => element.addEventListener("click", e => {
-            openEdit(e, getProjects);
+            openEdit(e, getProjects, saveEdit);
         }));
     }
 
@@ -140,22 +140,26 @@ const display = (function() {
         deleteBtn.addEventListener("click", removeTask);
     }
 
-    const displayNewTask = function(project, removeTask, openEdit, getProjects) {
+    const displayNewTask = function(project, removeTask, openEdit, saveEdit, getProjects) {
         const id = project.id;
         const taskDiv = document.querySelector(`.task-div[data-i="${id}"]`);
         createTaskContainer(project.entries[project.entries.length - 1], id);
         const deleteBtn = document.querySelector(`.task-div[data-i="${id}"] .cancel-btn[data-i="${project.entries.length - 1}"]`);
         deleteBtn.addEventListener("click", removeTask);
         const editBtn = document.querySelector(`.task-div[data-i="${id}"] .edit-btn[data-i="${project.entries.length - 1}"]`);
-        editBtn.addEventListener("click", ("click", e => {
-            openEdit(e, getProjects);
-        }));;
+        editBtn.addEventListener("click",  e => {
+            openEdit(e, getProjects, saveEdit);
+        });
         const task = document.querySelector(`.task-div[data-i="${id}"] .flex-column[data-i="${project.entries[project.entries.length - 1].id}"]`);
         task.addEventListener("mouseenter", taskHover);
         task.addEventListener("mouseleave", taskHover);
     }
 
-    return {displayData, displayNewProject, displayNewTask};
+    const displayEditedTask = function(projectId, taskId, refNode) {
+        console.log(refNode);
+    }
+
+    return {displayData, displayNewProject, displayNewTask, displayEditedTask};
 })();
 
 export {display};

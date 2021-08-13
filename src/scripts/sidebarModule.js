@@ -13,6 +13,7 @@ const sidebar = (function() {
             const horizontalDiv = document.createElement("div");
             horizontalDiv.classList.add("flex-horizontal");
             horizontalDiv.classList.add("removable");
+            horizontalDiv.setAttribute("data-i", `${obj.id}`);
 
             const p = document.createElement("p");
             p.textContent = obj.projectName;

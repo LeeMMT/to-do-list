@@ -221,7 +221,7 @@ const QuickAddForm = (function() {
         addBtn.addEventListener("click", quickAddCallback);
     }
 
-    const openEdit = function(e, getProjects) {
+    const openEdit = function(e, getProjects, saveEdit) {
 
         if (document.querySelector(".quickAddGrid") || document.querySelector(".edit-task-grid")) {
             closeForm();
@@ -230,8 +230,8 @@ const QuickAddForm = (function() {
 
         const projectId = Number(e.srcElement.parentElement.parentElement.parentElement.parentElement.getAttribute("data-i"));
         const taskId = Number(e.srcElement.getAttribute("data-i"));
+        const taskDiv = e.srcElement.parentElement.parentElement.parentElement;
         const projects = getProjects();
-        console.log(projects);
 
         setTimeout(() => {
             quickAddBtn.children[0].classList.toggle("add-icon-rotated");
@@ -256,20 +256,20 @@ const QuickAddForm = (function() {
         priorityIconBg.classList.add("utility-icon-bg");
 
         const priorityIcon = document.createElement("i");
-        let priorityLevel;
-        switch (projects[projectId].entries[taskId].priority) {
+
+        priorityLevel = projects[projectId].entries[taskId].priority;
+
+        switch (priorityLevel) {
             case "Low":
-                priorityLevel = "grey";
+                priorityIcon.classList.add("flag-grey-icon");
                 break;
             case "Medium":
-                priorityLevel = "orange";
+                priorityIcon.classList.add("flag-orange-icon");
                 break;
             case "High":
-                priorityLevel = "red";
+                priorityIcon.classList.add("flag-red-icon");
                 break;
         }
-        console.log(priorityLevel);
-        priorityIcon.classList.add(`flag-${priorityLevel}-icon`);
 
         const form = document.createElement("form");
         form.classList.add("edit-task-grid");
@@ -285,11 +285,10 @@ const QuickAddForm = (function() {
         titleInput.setAttribute("name", "title");
         titleInput.value = projects[projectId].entries[taskId].title;
         
-
         const descriptionLabel = document.createElement("label");
         descriptionLabel.setAttribute("for", "description");
         descriptionLabel.setAttribute("id", "description-l");
-        descriptionLabel.value = "Description:";
+        descriptionLabel.textContent = "Description:";
 
         const descriptionInput = document.createElement("textarea");
         descriptionInput.setAttribute("id", "description");
@@ -329,6 +328,10 @@ const QuickAddForm = (function() {
         document.body.appendChild(formBg);
 
         priorityIconBg.addEventListener("click", openPriority);
+
+        saveBtn.addEventListener("click", () => {
+            saveEdit(projectId, taskId, taskDiv);
+        });
     }
 
     return {quickAddBtn, openForm, openEdit, closeForm, openPriority, priorityLevel, getPriority};

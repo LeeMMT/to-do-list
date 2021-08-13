@@ -302,6 +302,7 @@ nav a {
 
 #description {
   grid-area: description;
+  height: 96px;
 }
 
 #project-l {

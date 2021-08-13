@@ -57,12 +57,6 @@ const DATACONTROL = (function() {
         }
     }
 
-    const decrementProjectId = function(projectId) {
-        for (let i = projectId; i < projects.length + 1; i++) {
-
-        }
-    }
-
     const decrementId = function(projectId, taskId) {
 
         for (let i = taskId; i < projects[projectId].entries.length; i++) {
@@ -96,12 +90,12 @@ const DATACONTROL = (function() {
                 projects[i].id -= 1;
                 document.querySelector(`.projectDelete[data-i="${i + 1}"]`).setAttribute("data-i", `${i}`);
                 document.querySelector(`.task-div[data-i="${i + 1}"]`).setAttribute("data-i", `${i}`);
+                document.querySelector(`.icon-bg.small[data-i="${i + 1}"]`).setAttribute("data-i", `${i}`);
             }
         } else {
             const projectId = this.parentElement.parentElement.parentElement.parentElement.getAttribute("data-i");
             const taskId = this.getAttribute("data-i");
-            console.log(projectId);
-            console.log(taskId);
+            
             this.parentElement.parentElement.parentElement.remove();
             projects[projectId].entries.splice(taskId, 1);
             decrementId(projectId, taskId);
@@ -162,7 +156,52 @@ const DATACONTROL = (function() {
 
         let projectToPass = (project) ? project : newProject;
         projectToPass = projects.find(element => element.projectName === projectToPass);
-        display.displayNewTask(projectToPass, removeTask, QuickAddForm.openEdit, getProjects);
+        display.displayNewTask(projectToPass, removeTask, QuickAddForm.openEdit, saveEdit, getProjects);
+    }
+
+    const saveEdit = function(projectId, taskId, taskDiv) {
+
+        const title = document.querySelector("#title").value;
+        const description = document.querySelector("#description").value;
+
+        console.log(projectId);
+        console.log(taskId);
+        console.log(title);
+        console.log(description);
+
+        if (validateSaveEdit(projectId, taskId, title, description) === false) {
+            return;
+        }
+
+        console.log("second log of saveEdit");
+        projects[projectId].entries[taskId].title = title;
+        projects[projectId].entries[taskId].description = description;
+
+        const newPriority = QuickAddForm.getPriority();
+        projects[projectId].entries[taskId].priority = newPriority;
+
+        if (localStorageAvailable) window.localStorage.setItem('localProjects', JSON.stringify(projects));
+        
+        QuickAddForm.closeForm();
+        
+        const updatedBulletIcon = taskDiv.children[0].firstChild.firstChild;
+        updatedBulletIcon.className = "";
+        switch (newPriority) {
+            case "Low":
+                updatedBulletIcon.classList.add("bullet-icon-grey");
+                break;
+            case "Medium":
+                updatedBulletIcon.classList.add("bullet-icon-orange");
+                break;
+            case "High":
+                updatedBulletIcon.classList.add("bullet-icon-red");
+                break;
+        }
+        
+        taskDiv.children[0].firstChild.lastChild.textContent = title;
+        taskDiv.children[1].textContent = description;
+
+        sidebar.updateSidebar(getProjects);
     }
 
     const taskExists = function(project, taskName) {
@@ -171,6 +210,10 @@ const DATACONTROL = (function() {
                 return projects[i].entries.find(element => element.title === taskName);
             }
         }
+    }
+
+    const editTaskExists = function(projectId, taskId, title) {
+        projects[projectId].entries.some(item => item.id !== taskId && item.title === title);
     }
 
     const validateQuickAdd = function(title, description, project, newProject) {
@@ -189,15 +232,28 @@ const DATACONTROL = (function() {
         }
     }
 
+    const validateSaveEdit = function(projectId, taskId, title, description) {
+        
+        if (!title || !description) {
+            alert("Please fill in the form");
+            return false;
+        } else if (editTaskExists(projectId, taskId, title)) {
+            alert(`A task with the name "${title}" already exists inside "${projects[projectId].projectName}"`);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     const getProjects = function() {
         return projects;
     }
 
     initializeLocalStorage();
-    return {createNewProject, createNewToDo, removeTask, optionTagCreator, quickAdd, getProjects};
+    return {createNewProject, createNewToDo, removeTask, optionTagCreator, quickAdd, saveEdit, getProjects};
 })();
 
 sidebar.generateProjectNames(DATACONTROL.getProjects);
 sidebar.menuBtn.addEventListener("click", sidebar.toggleSidebar);
 QuickAddForm.quickAddBtn.addEventListener("click", () => QuickAddForm.openForm(DATACONTROL.optionTagCreator, DATACONTROL.quickAdd));
-display.displayData(DATACONTROL.getProjects, DATACONTROL.removeTask, QuickAddForm.openEdit);
+display.displayData(DATACONTROL.getProjects, DATACONTROL.removeTask, QuickAddForm.openEdit, DATACONTROL.saveEdit);
