@@ -115,6 +115,14 @@ const QuickAddForm = (function() {
         header.classList.add("edit-header");
         header.textContent = "add a task...";
 
+        const iconContainer = document.createElement("div");
+        iconContainer.classList.add("flex-horizontal");
+
+        const datePicker = document.createElement("input");
+        datePicker.setAttribute("type", "date");
+        datePicker.setAttribute("id", "date");
+        datePicker.setAttribute("name", "date");
+
         const priorityIconBg = document.createElement("div");
         priorityIconBg.classList.add("utility-icon-bg");
 
@@ -188,8 +196,10 @@ const QuickAddForm = (function() {
         addBtn.setAttribute("type", "button");
 
         priorityIconBg.appendChild(priorityIcon);
+        iconContainer.appendChild(datePicker);
+        iconContainer.appendChild(priorityIconBg);
         utilityBar.appendChild(header);
-        utilityBar.appendChild(priorityIconBg);
+        utilityBar.appendChild(iconContainer);
         form.appendChild(utilityBar);
         form.appendChild(titleLabel);
         form.appendChild(titleInput);
@@ -258,6 +268,17 @@ const QuickAddForm = (function() {
         header.classList.add("edit-header");
         header.textContent = "edit task...";
 
+        const iconContainer = document.createElement("div");
+        iconContainer.classList.add("flex-horizontal");
+
+        const datePicker = document.createElement("input");
+        datePicker.setAttribute("type", "date");
+        datePicker.setAttribute("id", "date");
+        datePicker.setAttribute("name", "date");
+        if (projects[projectId].entries[taskId].date) {
+            datePicker.value = projects[projectId].entries[taskId].date;
+        }
+        
         const priorityIconBg = document.createElement("div");
         priorityIconBg.classList.add("utility-icon-bg");
 
@@ -316,8 +337,10 @@ const QuickAddForm = (function() {
         saveBtn.setAttribute("type", "button");
 
         priorityIconBg.appendChild(priorityIcon);
+        iconContainer.appendChild(datePicker);
+        iconContainer.appendChild(priorityIconBg);
         utilityBar.appendChild(header);
-        utilityBar.appendChild(priorityIconBg);
+        utilityBar.appendChild(iconContainer);
         form.appendChild(utilityBar);
         form.appendChild(titleLabel);
         form.appendChild(titleInput);

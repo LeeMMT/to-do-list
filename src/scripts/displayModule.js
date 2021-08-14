@@ -14,64 +14,72 @@ const display = (function() {
     }
 
     const createTaskContainer = function(item, projectId) {
+        console.log(item);
         const taskContainer = document.createElement("div");
-                taskContainer.setAttribute("data-i", item.id);
-                taskContainer.classList.add("flex-column");
+        taskContainer.setAttribute("data-i", item.id);
+        taskContainer.classList.add("flex-column");
                 
-                const task = document.createElement("div");
-                task.classList.add("task");
-                task.classList.add("flex-horizontal");
+        const task = document.createElement("div");
+        task.classList.add("task");
+        task.classList.add("flex-horizontal");
 
-                const IconAndTitle = document.createElement("div");
-                IconAndTitle.classList.add("flex-horizontal-inner");
+        const IconAndTitle = document.createElement("div");
+        IconAndTitle.classList.add("flex-horizontal-inner");
 
-                const buttonDiv = document.createElement("div");
-                buttonDiv.classList.add("flex-horizontal-inner");
+        const buttonDiv = document.createElement("div");
+        buttonDiv.classList.add("flex-horizontal-inner");
 
-                const bulletIcon = document.createElement("div");
-                switch (item.priority) {
-                    case "Low":
-                        bulletIcon.classList.add("bullet-icon-grey");
-                        break;
-                    case "Medium":
-                        bulletIcon.classList.add("bullet-icon-orange");
-                        break;
-                    case "High":
-                        bulletIcon.classList.add("bullet-icon-red");
-                        break;
-                }
+        const bulletIcon = document.createElement("div");
+        switch (item.priority) {
+            case "Low":
+                bulletIcon.classList.add("bullet-icon-grey");
+                break;
+            case "Medium":
+                bulletIcon.classList.add("bullet-icon-orange");
+                break;
+            case "High":
+                bulletIcon.classList.add("bullet-icon-red");
+                break;
+        }
 
-                const taskTitle = document.createElement("p");
-                taskTitle.classList.add("semi-b");
-                taskTitle.textContent = item.title;
+        const taskTitle = document.createElement("p");
+        taskTitle.classList.add("semi-b");
+        taskTitle.textContent = item.title;
 
-                const editBtn = document.createElement("button");
-                editBtn.textContent = "edit";
-                editBtn.setAttribute("data-i", item.id);
-                editBtn.classList.add("edit-btn");
-                editBtn.classList.add("font-size-small");
+        const editBtn = document.createElement("button");
+        editBtn.textContent = "edit";
+        editBtn.setAttribute("data-i", item.id);
+        editBtn.classList.add("edit-btn");
+        editBtn.classList.add("font-size-small");
 
-                const deleteBtn = document.createElement("button");
-                deleteBtn.textContent = "delete";
-                deleteBtn.setAttribute("data-i", item.id);
-                deleteBtn.classList.add("cancel-btn");
-                deleteBtn.classList.add("font-size-small");
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "delete";
+        deleteBtn.setAttribute("data-i", item.id);
+        deleteBtn.classList.add("cancel-btn");
+        deleteBtn.classList.add("font-size-small");
 
-                const taskDescription = document.createElement("p");
-                taskDescription.textContent = item.description;
+        const taskDescription = document.createElement("p");
+        taskDescription.textContent = item.description;
 
-                IconAndTitle.appendChild(bulletIcon);
-                IconAndTitle.appendChild(taskTitle);
-                task.appendChild(IconAndTitle);
-                buttonDiv.appendChild(editBtn);
-                buttonDiv.appendChild(deleteBtn);
-                task.appendChild(buttonDiv);
-                taskContainer.appendChild(task);
-                taskContainer.appendChild(taskDescription);
-                document.querySelector(`.task-div[data-i="${projectId}"]`).appendChild(taskContainer);
+        IconAndTitle.appendChild(bulletIcon);
+        IconAndTitle.appendChild(taskTitle);
+        task.appendChild(IconAndTitle);
+        buttonDiv.appendChild(editBtn);
+        buttonDiv.appendChild(deleteBtn);
+        task.appendChild(buttonDiv);
+        taskContainer.appendChild(task);
+        if (item.date) {
+            const date = document.createElement("p");
+            date.classList.add("deadline");
+            date.textContent = `Deadline: ${item.date}`;
+            taskContainer.appendChild(date);
+        }
+        taskContainer.appendChild(taskDescription);
+        document.querySelector(`.task-div[data-i="${projectId}"]`).appendChild(taskContainer);
     }
 
     const loopData = function(obj) {
+
         const titleDiv = document.createElement("div");
         titleDiv.classList.add("flex-horizontal");
 

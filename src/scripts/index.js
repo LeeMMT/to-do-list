@@ -17,6 +17,7 @@ const DATACONTROL = (function() {
             description: `To delete a project, use the delete button adjacent to a project's title. To delete a task, simply hover over the task you wish to 
             delete. Doing so will cause the "delete" and "edit" buttons for that task to become visible.`,
             priority: `Low`,
+            deadline: "",
             id: 0,
             },
             {
@@ -24,6 +25,7 @@ const DATACONTROL = (function() {
             description: `To edit the information in a task, hover over a task and click the edit button. You can edit a task's title, description, and 
             priority.`,
             priority: `Medium`,
+            deadline: "",
             id: 1,
             },
             {
@@ -31,6 +33,7 @@ const DATACONTROL = (function() {
             description: `The sidebar, brought up by clicking the menu icon in the top-left, presents you with a list of all of your projects, as well as the 
             number of tasks that each hold. If you can't find the project you are looking for, try clicking the corresponding project name in the sidebar.`,
             priority: `High`,
+            deadline: "",
             id: 2,
             }
         ]
@@ -68,9 +71,9 @@ const DATACONTROL = (function() {
     
     }
 
-    const createNewToDo = function(title, description, priority, projectIndex) {
+    const createNewToDo = function(title, description, priority, date, projectIndex) {
         const id = generateId(projects[projectIndex].entries);
-        return {title, description, priority, id};
+        return {title, description, priority, date, id};
     }
 
     const createNewProject = function(projectName) {
@@ -126,6 +129,8 @@ const DATACONTROL = (function() {
 
     const quickAdd = function() {
 
+        const date = document.querySelector("#date").value;
+        console.log(date);
         const title = document.querySelector("#title").value;
         const description = document.querySelector("#description").value;
         const selectTag = document.querySelector("#project");
@@ -143,10 +148,10 @@ const DATACONTROL = (function() {
 
         if (project) {
             const index = selectTag.selectedIndex - 1;
-            projects[index].entries.push(createNewToDo(title, description, QuickAddForm.getPriority(), index));
+            projects[index].entries.push(createNewToDo(title, description, QuickAddForm.getPriority(), date, index));
         } else {
             const index = projects[projects.length - 1].id;
-            projects[index].entries.push(createNewToDo(title, description, QuickAddForm.getPriority(), index));
+            projects[index].entries.push(createNewToDo(title, description, QuickAddForm.getPriority(), date, index));
         };
         
 
@@ -163,19 +168,18 @@ const DATACONTROL = (function() {
 
         const title = document.querySelector("#title").value;
         const description = document.querySelector("#description").value;
-
-        console.log(projectId);
-        console.log(taskId);
-        console.log(title);
-        console.log(description);
+        let dateString;
+        if (document.querySelector("#date").value) {
+            dateString = document.querySelector("#date").value;
+        }
 
         if (validateSaveEdit(projectId, taskId, title, description) === false) {
             return;
         }
 
-        console.log("second log of saveEdit");
         projects[projectId].entries[taskId].title = title;
         projects[projectId].entries[taskId].description = description;
+        if (dateString) projects[projectId].entries[taskId].date = dateString;
 
         const newPriority = QuickAddForm.getPriority();
         projects[projectId].entries[taskId].priority = newPriority;
@@ -199,7 +203,18 @@ const DATACONTROL = (function() {
         }
         
         taskDiv.children[0].firstChild.lastChild.textContent = title;
-        taskDiv.children[1].textContent = description;
+        if (dateString && taskDiv.children.length === 3) {
+            taskDiv.children[1].textContent = `Deadline: ${dateString}`;
+            taskDiv.children[2].textContent = description;
+        } else if (dateString && taskDiv.children.length === 2) {
+            const date = document.createElement("p");
+            date.classList.add("deadline");
+            date.textContent = `Deadline: ${dateString}`;
+            taskDiv.insertBefore(date, taskDiv.children[1]);
+            taskDiv.children[2].textContent = description;           
+        } else {
+            taskDiv.children[1].textContent = description;
+        }
 
         sidebar.updateSidebar(getProjects);
     }
