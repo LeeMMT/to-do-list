@@ -109,7 +109,7 @@ const QuickAddForm = (function() {
         const utilityBar = document.createElement("div");
         utilityBar.setAttribute("id", "utility-bar");
         utilityBar.classList.add("flex-horizontal");
-
+        
         const header = document.createElement("p");
         header.classList.add("font-size-small");
         header.classList.add("edit-header");
