@@ -99,7 +99,7 @@ const QuickAddForm = (function() {
         setTimeout(() => {
             quickAddBtn.children[0].classList.toggle("add-icon-rotated");
             document.querySelector(".dark-bg").classList.toggle("visible");
-            document.querySelector("body").classList.toggle("hidden");
+            document.body.classList.toggle("hidden");
             document.querySelector("body > .container").classList.toggle("blur");
         }, 0);
 

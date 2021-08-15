@@ -14,7 +14,7 @@ const display = (function() {
     }
 
     const createTaskContainer = function(item, projectId) {
-        console.log(item);
+
         const taskContainer = document.createElement("div");
         taskContainer.setAttribute("data-i", item.id);
         taskContainer.classList.add("flex-column");
