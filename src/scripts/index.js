@@ -29,9 +29,10 @@ const DATACONTROL = (function() {
             id: 1,
             },
             {
-            title: `The sidebar`,
+            title: `The sidebar & "quick-jumping"`,
             description: `The sidebar, brought up by clicking the menu icon in the top-left, presents you with a list of all of your projects, as well as the 
-            number of tasks that each hold. If you can't find the project you are looking for, try clicking the corresponding project name in the sidebar.`,
+            number of tasks that each hold. If you can't find the project you are looking for, try clicking the corresponding project name in the sidebar to quick jump
+             to it.`,
             priority: `High`,
             deadline: "",
             id: 2,

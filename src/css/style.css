@@ -403,7 +403,7 @@ button:hover {
 }
 
 .flex-column > p:last-of-type {
-  margin: 8px 0 0 18px;
+  margin: 8px 0 0 16px;
 }
 
 #project-task-area .flex-horizontal {
@@ -469,7 +469,7 @@ button:hover {
 .deadline {
   color: #B8B8B8;
   font-size: 14px;
-  margin-left: 18px;
+  margin-left: 16px;
   margin-top: -4px;
 }
 
@@ -578,7 +578,7 @@ button:hover {
   height: 28px;
   width: 28px;
   border-radius: 6px;
-  margin-left: 4px;
+  margin-right: 4px;
 }
 
 .clock-icon-grey {

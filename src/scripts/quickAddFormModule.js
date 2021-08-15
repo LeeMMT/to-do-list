@@ -116,7 +116,7 @@ const QuickAddForm = (function() {
         header.textContent = "add a task...";
 
         const iconContainer = document.createElement("div");
-        iconContainer.classList.add("flex-horizontal");
+        iconContainer.classList.add("flex-horizontal-inner");
 
         const datePicker = document.createElement("input");
         datePicker.setAttribute("type", "date");
@@ -196,8 +196,8 @@ const QuickAddForm = (function() {
         addBtn.setAttribute("type", "button");
 
         priorityIconBg.appendChild(priorityIcon);
-        iconContainer.appendChild(datePicker);
         iconContainer.appendChild(priorityIconBg);
+        iconContainer.appendChild(datePicker);
         utilityBar.appendChild(header);
         utilityBar.appendChild(iconContainer);
         form.appendChild(utilityBar);
@@ -224,7 +224,7 @@ const QuickAddForm = (function() {
 
         formBg.appendChild(form);
 
-        document.querySelector("body").appendChild(formBg);
+        document.body.appendChild(formBg);
 
         priorityIconBg.addEventListener("click", openPriority);
 
@@ -337,8 +337,8 @@ const QuickAddForm = (function() {
         saveBtn.setAttribute("type", "button");
 
         priorityIconBg.appendChild(priorityIcon);
-        iconContainer.appendChild(datePicker);
         iconContainer.appendChild(priorityIconBg);
+        iconContainer.appendChild(datePicker);
         utilityBar.appendChild(header);
         utilityBar.appendChild(iconContainer);
         form.appendChild(utilityBar);
