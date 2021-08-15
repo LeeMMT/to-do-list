@@ -101,7 +101,7 @@ const QuickAddForm = (function() {
             document.querySelector(".dark-bg").classList.toggle("visible");
             document.body.classList.toggle("hidden");
             document.querySelector("body > .container").classList.toggle("blur");
-        }, 0);
+        });
 
         const formBg = document.createElement("div");
         formBg.classList.add("form-bg");
